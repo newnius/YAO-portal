@@ -1,0 +1,7 @@
+RewriteEngine on
+
+RewriteRule ^service$ /ajax.php
+RewriteRule ^auth$ /auth.php
+RewriteRule ^help$ /help.php
+RewriteRule ^ucenter$ /ucenter.php
+

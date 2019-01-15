@@ -189,3 +189,45 @@
 		</div>
 	</div>
 </div>
+
+<!-- workspace modal -->
+<div class="modal fade" id="modal-workspace" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content panel-info">
+			<div class="modal-header panel-heading">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+				</button>
+				<h4 id="modal-workspace-title" class="modal-title">Add New Workspace</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form" action="javascript:void(0)">
+					<label>Name</label>
+					<div class="form-group form-group-lg">
+						<label for="form-agent-ip" class="sr-only">IP</label>
+						<input type="text" id="form-workspace-name" class="form-control" maxlength="64"
+						       placeholder="" required/>
+					</div>
+					<label>Virtual Cluster</label>
+					<div class="form-group form-group-lg">
+						<label for="form-workspace-virtual-cluster" class="sr-only">Virtual Cluster</label>
+						<select id="form-workspace-virtual-cluster" class="form-control">
+							<option value="0">default</option>
+						</select>
+					</div>
+					<label>Permission</label>
+					<div class="form-group form-group-lg">
+						<label for="form-workspace-permission" class="sr-only">Token</label>
+						<input type="number" id="form-workspace-permission" class="form-control" placeholder=""/>
+					</div>
+					<div>
+						<input type="hidden" id="form-workspace-submit-type"/>
+						<input type="hidden" id="form-workspace-id"/>
+						<input type="hidden" id="form-workspace-content"/>
+						<button id="form-workspace-submit" type="submit" class="btn btn-primary btn-lg">Submit</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

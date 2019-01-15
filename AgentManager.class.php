@@ -10,7 +10,7 @@ class AgentManager
 	private static $table = 'yao_agent';
 
 	/*
-	 * do add link
+	 * do add agent
 	 */
 	public static function add(CRObject $agent)
 	{

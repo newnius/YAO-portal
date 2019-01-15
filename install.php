@@ -64,6 +64,7 @@ function create_table_workspace()
                 `name` varchar(64) NOT NULL,
                 `content` json NOT NULL,
                 `created_at` BIGINT NOT NULL,
+                `updated_at` BIGINT NOT NULL,
 				`virtual_cluster` varchar(64) NOT NULL,
 				 INDEX(`virtual_cluster`),
 				`created_by` int NOT NULL,

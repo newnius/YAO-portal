@@ -15,6 +15,10 @@ $(function () {
 			register_events_agent();
 			load_agents('');
 			break;
+		case "workspaces":
+			register_events_workspace();
+			load_workspaces('');
+			break;
 		default:
 			break;
 	}

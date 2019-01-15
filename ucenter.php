@@ -39,6 +39,9 @@ if (isset($_GET['logs'])) {
 } elseif (isset($_GET['agents'])) {
 	$page_type = 'agents';
 
+} elseif (isset($_GET['workspaces'])) {
+	$page_type = 'workspaces';
+
 } elseif (isset($_GET['home'])) {
 	$page_type = 'home';
 
@@ -190,6 +193,24 @@ foreach ($entries as $entry) {
 						</div>
 					</div>
 
+				<?php } elseif ($page_type === 'workspaces') { ?>
+					<div id="workspaces">
+						<div class="panel panel-default">
+							<div class="panel-heading">Workspaces</div>
+							<div class="panel-body">
+								<div class="table-responsive">
+									<div id="toolbar">
+										<button id="btn-workspace-add" class="btn btn-primary">
+											<i class="glyphicon glyphicon-plus"></i> New
+										</button>
+									</div>
+									<table id="table-workspace" data-toolbar="#toolbar" class="table table-striped">
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+
 				<?php } ?>
 
 			</div>
@@ -208,6 +229,7 @@ foreach ($entries as $entry) {
 
 <script src="static/job.js"></script>
 <script src="static/agent.js"></script>
+<script src="static/workspace.js"></script>
 <script src="static/ucenter.js"></script>
 </body>
 </html>

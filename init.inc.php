@@ -75,6 +75,12 @@ function init_accessMap()
 		'agent.add' => array('root', 'admin'),
 		'agent.remove' => array('root', 'admin'),
 
+		/* workspace */
+		'workspace.list' => array('root', 'admin', 'normal'),
+		'workspace.add' => array('root', 'admin', 'normal'),
+		'workspace.update' => array('root', 'admin', 'normal'),
+		'workspace.remove' => array('root', 'admin', 'normal'),
+
 		/* ucenter entry show control */
 		'ucenter.home' => array('root', 'admin', 'developer', 'normal'),
 		'ucenter.jobs' => array('root', 'admin', 'developer', 'normal'),

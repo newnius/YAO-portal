@@ -9,6 +9,7 @@ require_once('Securer.class.php');
 require_once('user.logic.php');
 require_once('job.logic.php');
 require_once('agent.logic.php');
+require_once('workspace.logic.php');
 
 require_once('config.inc.php');
 require_once('init.inc.php');
@@ -25,8 +26,6 @@ function csrf_check($action)
 		return false;
 	}
 	$post_methods = array(
-		'job_submit',
-		'job_stop',
 		'signout',
 		'oauth_get_url'
 	);
@@ -82,7 +81,7 @@ switch ($action) {
 	case 'job_stop':
 		$job = new CRObject();
 		$job->set('id', cr_get_POST('id'));
-		$res = job_stop($link);
+		$res = job_stop($job);
 		break;
 
 	case 'job_describe':
@@ -110,6 +109,38 @@ switch ($action) {
 		$job = new CRObject();
 		$job->set('id', cr_get_POST('id'));
 		$res = agent_remove($job);
+		break;
+
+	case 'workspace_list':
+		$rule = new CRObject();
+		$rule->set('offset', cr_get_GET('offset'));
+		$rule->set('limit', cr_get_GET('limit'));
+		$res = workspace_list($rule);
+		break;
+
+	case 'workspace_add':
+		$workspace = new CRObject();
+		$workspace->set('name', cr_get_POST('name'));
+		$workspace->set('content', cr_get_POST('content'));
+		$workspace->set('virtual_cluster', cr_get_POST('virtual_cluster'));
+		$workspace->set('permission', cr_get_POST('permission'));
+		$res = workspace_add($workspace);
+		break;
+
+	case 'workspace_update':
+		$workspace = new CRObject();
+		$workspace->set('id', cr_get_POST('id'));
+		$workspace->set('name', cr_get_POST('name'));
+		$workspace->set('content', cr_get_POST('content'));
+		$workspace->set('virtual_cluster', cr_get_POST('virtual_cluster'));
+		$workspace->set('permission', cr_get_POST('permission'));
+		$res = workspace_update($workspace);
+		break;
+
+	case 'workspace_remove':
+		$workspace = new CRObject();
+		$workspace->set('id', cr_get_POST('id'));
+		$res = workspace_remove($workspace);
 		break;
 
 	case 'user_signout':

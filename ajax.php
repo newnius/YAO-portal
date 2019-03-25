@@ -68,7 +68,7 @@ switch ($action) {
 
 	case 'job_submit':
 		$job = new CRObject();
-		$job->set('name', cr_get_POST('name'));
+		$job->set('name', cr_get_POST('name', '') . '-' . time());
 		$job->set('virtual_cluster', cr_get_POST('cluster'));
 		$job->set('workspace', cr_get_POST('workspace'));
 		$job->set('priority', cr_get_POST('priority'));
@@ -88,6 +88,19 @@ switch ($action) {
 		$job = new CRObject();
 		$job->set('id', cr_get_POST('id'));
 		$res = job_describe($job);
+		break;
+
+	case 'job_status':
+		$job = new CRObject();
+		$job->set('name', cr_get_GET('name'));
+		$res = job_status($job);
+		break;
+
+	case 'task_logs':
+		$task = new CRObject();
+		$task->set('job', cr_get_GET('job'));
+		$task->set('task', cr_get_GET('task'));
+		$res = task_logs($task);
 		break;
 
 	case 'agent_list':

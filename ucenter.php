@@ -30,6 +30,9 @@ if (isset($_GET['logs'])) {
 } elseif (isset($_GET['jobs'])) {
 	$page_type = 'jobs';
 
+} elseif (isset($_GET['job_status'])) {
+	$page_type = 'job_status';
+
 } elseif (isset($_GET['jobs_all'])) {
 	$page_type = 'jobs_all';
 
@@ -141,6 +144,24 @@ foreach ($entries as $entry) {
 										</button>
 									</div>
 									<table id="table-job" data-toolbar="#toolbar" class="table table-striped">
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				<?php } elseif ($page_type === 'job_status') { ?>
+					<div id="jobs">
+						<div class="panel panel-default">
+							<div class="panel-heading">Job Status</div>
+							<div class="panel-body">
+								<div class="table-responsive">
+									<div id="toolbar">
+										<button id="btn-job-stop" class="btn btn-default">
+											<i class="glyphicon glyphicon-remove"></i> Stop
+										</button>
+									</div>
+									<table id="table-task" data-toolbar="#toolbar" class="table table-striped">
 									</table>
 								</div>
 							</div>

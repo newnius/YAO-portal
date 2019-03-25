@@ -14,6 +14,17 @@ function register_events_job() {
 			run_before = moment(run_before).unix();
 		}
 		var tasks = [];
+		$('#form-job-tasks').find('.row').each(function () {
+			var vals = $(this).find('input');
+			var task = {};
+			task['name'] = vals.eq(0).val();
+			task['cmd'] = vals.eq(1).val();
+			task['cpu_number'] = vals.eq(2).val();
+			task['memory'] = vals.eq(3).val();
+			task['gpu_number'] = vals.eq(4).val();
+			task['gpu_memory'] = vals.eq(5).val();
+			tasks.push(task);
+		});
 
 		/* TODO validate form */
 
@@ -153,29 +164,33 @@ var clusterFormatter = function (cluster) {
 };
 
 var priorityFormatter = function (status) {
+	status = parseInt(status);
 	switch (status) {
-		case '1':
+		case 1:
 			return '<span class="text-normal">Low</span>';
-		case '25':
+		case 25:
 			return '<span class="text-info">Medium</span>';
-		case '50':
+		case 50:
 			return '<span class="text-success">High</span>';
-		case '99':
+		case 99:
 			return '<span class="text-danger">Urgent</span>';
 	}
 	return 'Unknown (' + status + ')';
 };
 
 var statusFormatter = function (status) {
+	status = parseInt(status);
 	switch (status) {
-		case '0':
-			return '<span class="text-normal">Pending</span>';
-		case '1':
+		case 0:
+			return '<span class="text-normal">Created</span>';
+		case 1:
+			return '<span class="text-normal">Starting</span>';
+		case 2:
 			return '<span class="text-info">Running</span>';
-		case '2':
-			return '<span class="text-success">Finished</span>';
-		case '3':
+		case 3:
 			return '<span class="text-danger">Stopped</span>';
+		case 4:
+			return '<span class="text-success">Finished</span>';
 	}
 	return 'Unknown(' + status + ')';
 };
@@ -195,18 +210,24 @@ function jobResponseHandler(res) {
 function jobOperateFormatter(value, row, index) {
 	var div = '<div class="btn-group" role="group" aria-label="...">';
 	if (page_type === 'jobs')
-		div += '<button class="btn btn-default view"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;</button>';
-	if (page_type === 'jobs' && (row.status === '0' || row.status === '1'))
+		div += '<button class="btn btn-default config"><i class="glyphicon glyphicon-cog"></i>&nbsp;</button>';
+	if (page_type === 'jobs')
+		div += '<button class="btn btn-default stats"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;</button>';
+	if (page_type === 'jobs' && (parseInt(row.status) === 0 || parseInt(row.status) === 1))
 		div += '<button class="btn btn-default stop"><i class="glyphicon glyphicon-remove"></i>&nbsp;</button>';
 	div += '</div>';
 	return div;
 }
 
 window.jobOperateEvents = {
-	'click .view': function (e, value, row, index) {
+	'click .config': function (e, value, row, index) {
+		row.tasks = JSON.parse(row.tasks);
 		var formattedData = JSON.stringify(row, null, '\t');
 		$('#modal-job-description-content').text(formattedData);
 		$('#modal-job-description').modal('show');
+	},
+	'click .stats': function (e, value, row, index) {
+		window.open("?job_status&name=" + row.name);
 	},
 	'click .stop': function (e, value, row, index) {
 		if (!confirm('Are you sure to stop this job?')) {
@@ -223,6 +244,129 @@ window.jobOperateEvents = {
 				$("#modal-msg").modal('show');
 			}
 			$('#table-link').bootstrapTable("refresh");
+		});
+		ajax.fail(function (jqXHR, textStatus) {
+			$("#modal-msg-content").html("Request failed : " + jqXHR.statusText);
+			$("#modal-msg").modal('show');
+			$('#table-job').bootstrapTable("refresh");
+		});
+	}
+};
+
+function load_job_status(name) {
+	$("#table-task").bootstrapTable({
+		url: window.config.BASE_URL + '/service?action=job_status&name=' + name,
+		responseHandler: jobStatusResponseHandler,
+		sidePagination: 'server',
+		cache: false,
+		striped: true,
+		pagination: false,
+		pageSize: 10,
+		pageList: [10, 25, 50, 100, 200],
+		search: false,
+		showColumns: true,
+		showRefresh: true,
+		showToggle: false,
+		showPaginationSwitch: true,
+		minimumCountColumns: 2,
+		clickToSelect: false,
+		sortName: 'nobody',
+		sortOrder: 'desc',
+		smartDisplay: true,
+		mobileResponsive: true,
+		showExport: true,
+		columns: [{
+			field: 'id',
+			title: 'ID',
+			align: 'center',
+			valign: 'middle'
+		}, {
+			field: 'image',
+			title: 'Image',
+			align: 'center',
+			valign: 'middle',
+			visible: false,
+		}, {
+			field: 'image_digest',
+			title: 'Image Version',
+			align: 'center',
+			valign: 'middle',
+			visible: false,
+		}, {
+			field: 'hostname',
+			title: 'Hostname',
+			align: 'center',
+			valign: 'middle'
+		}, {
+			field: 'command',
+			title: 'Command',
+			align: 'center',
+			valign: 'middle'
+		}, {
+			field: 'created_at',
+			title: 'Created At',
+			align: 'center',
+			valign: 'middle'
+		}, {
+			field: 'finished_at',
+			title: 'Finished At',
+			align: 'center',
+			valign: 'middle',
+			visible: false
+		}, {
+			field: 'status',
+			title: 'Status',
+			align: 'center',
+			valign: 'middle'
+		}, {
+			field: 'operate',
+			title: 'Operate',
+			align: 'center',
+			events: jobStatusOperateEvents,
+			formatter: jobStatusOperateFormatter
+		}]
+	});
+}
+
+function jobStatusResponseHandler(res) {
+	if (res['errno'] === 0) {
+		var tmp = {};
+		tmp["total"] = res["count"];
+		tmp["rows"] = res["tasks"];
+		return tmp;
+	}
+	$("#modal-msg-content").html(res["msg"]);
+	$("#modal-msg").modal('show');
+	return [];
+}
+
+function jobStatusOperateFormatter(value, row, index) {
+	var div = '<div class="btn-group" role="group" aria-label="...">';
+	div += '<button class="btn btn-default logs"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;</button>';
+	div += '</div>';
+	return div;
+}
+
+window.jobStatusOperateEvents = {
+	'click .logs': function (e, value, row, index) {
+		var job = getParameterByName('name');
+		var task = row.id;
+
+		var ajax = $.ajax({
+			url: window.config.BASE_URL + "/service?action=task_logs",
+			type: 'GET',
+			data: {
+				job: job,
+				task: task
+			}
+		});
+		ajax.done(function (res) {
+			if (res["errno"] !== 0) {
+				$("#modal-msg-content").html(res["msg"]);
+				$("#modal-msg").modal('show');
+			}
+			$('#modal-task-logs-content').text(res['logs']);
+			$('#modal-task-logs').modal('show');
 		});
 		ajax.fail(function (jqXHR, textStatus) {
 			$("#modal-msg-content").html("Request failed : " + jqXHR.statusText);

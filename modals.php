@@ -31,6 +31,23 @@
 	</div>
 </div>
 
+<!-- task logs modal -->
+<div class="modal fade" id="modal-task-logs" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content panel-info">
+			<div class="modal-header panel-heading">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">Task Outputs</h4>
+			</div>
+			<div class="modal-body">
+				<pre id="modal-task-logs-content"></pre>
+			</div>
+		</div>
+	</div>
+</div>
+
 <!-- job modal -->
 <div class="modal fade" id="modal-job" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
@@ -91,47 +108,49 @@
 						</div>
 					</div>
 					<label>Tasks</label>
-					<div class="row" id="form-job-tasks">
-						<div class="col-md-2">
-							<label>Name</label>
-							<div class="form-group">
-								<input type="text" class="form-control" maxlength="32"
-								       placeholder="Task Name & Node Name" required/>
+					<div class="" id="form-job-tasks">
+						<div class="row">
+							<div class="col-md-2">
+								<label>Name</label>
+								<div class="form-group">
+									<input type="text" class="form-control" maxlength="32"
+									       placeholder="Task Name & Node Name" required/>
+								</div>
 							</div>
-						</div>
-						<div class="col-md-2">
-							<label>CMD</label>
-							<div class="form-group">
-								<input type="text" class="form-control" maxlength="255"
-								       placeholder="Command to bring up task" required/>
+							<div class="col-md-2">
+								<label>CMD</label>
+								<div class="form-group">
+									<input type="text" class="form-control" maxlength="255"
+									       placeholder="Command to bring up task" required/>
+								</div>
 							</div>
-						</div>
-						<div class="col-md-2">
-							<label>CPU Number</label>
-							<div class="form-group">
-								<input type="number" class="form-control" step="1" min="1"
-								       placeholder="number of CPU required" required/>
+							<div class="col-md-2">
+								<label>CPU Number</label>
+								<div class="form-group">
+									<input type="number" class="form-control" step="1" min="1"
+									       placeholder="number of CPU required" required/>
+								</div>
 							</div>
-						</div>
-						<div class="col-md-2">
-							<label>Memory</label>
-							<div class="form-group">
-								<input type="number" class="form-control" step="512" min="512"
-								       placeholder="MB" required/>
+							<div class="col-md-2">
+								<label>Memory</label>
+								<div class="form-group">
+									<input type="number" class="form-control" step="512" min="512"
+									       placeholder="MB" required/>
+								</div>
 							</div>
-						</div>
-						<div class="col-md-2">
-							<label>GPU Number</label>
-							<div class="form-group">
-								<input type="number" class="form-control" step="1" min="1"
-								       placeholder="number of GPU cards required" required/>
+							<div class="col-md-2">
+								<label>GPU Number</label>
+								<div class="form-group">
+									<input type="number" class="form-control" step="1" min="1"
+									       placeholder="number of GPU cards required" required/>
+								</div>
 							</div>
-						</div>
-						<div class="col-md-2">
-							<label>GPU Memory</label>
-							<div class="form-group">
-								<input type="number" class="form-control" step="512" min="512"
-								       placeholder="MB" required/>
+							<div class="col-md-2">
+								<label>GPU Memory</label>
+								<div class="form-group">
+									<input type="number" class="form-control" step="512" min="512"
+									       placeholder="MB" required/>
+								</div>
 							</div>
 						</div>
 					</div>

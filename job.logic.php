@@ -21,6 +21,7 @@ function job_submit(CRObject $job)
 		return $res;
 	}
 	$job->set('created_by', Session::get('uid'));
+	$job->set('created_at', time());
 	$res['errno'] = JobManager::add($job) ? Code::SUCCESS : Code::UNKNOWN_ERROR;
 	$log = new CRObject();
 	$log->set('scope', Session::get('uid'));
@@ -28,7 +29,27 @@ function job_submit(CRObject $job)
 	$content = array('job' => $job, 'response' => $res['errno']);
 	$log->set('content', json_encode($content));
 	CRLogger::log($log);
-	/* TODO notify scheduler */
+
+	/* notify YAO-scheduler */
+	$spider = new Spider();
+	$tasks = json_decode($job->get('tasks'), true);
+	foreach ($tasks as $i => $task) {
+		$task['cpu_number'] = intval($task['cpu_number']);
+		$task['memory'] = intval($task['memory']);
+		$task['gpu_number'] = intval($task['gpu_number']);
+		$task['gpu_memory'] = intval($task['gpu_memory']);
+		$tasks[$i] = $task;
+	}
+	$job->set('tasks', $tasks);
+	$job->set('workspace', $job->getInt('workspace'));
+	$job->set('virtual_cluster', $job->getInt('virtual_cluster'));
+	$job->set('priority', $job->getInt('priority'));
+	$job->set('run_before', $job->getInt('run_before'));
+	$job->set('created_by', $job->getInt('created_by'));
+	$data['job'] = json_encode($job);
+	$spider->doPost(YAO_SCHEDULER_ADDR . '?action=job_submit', $data);
+	$res['message'] = $spider->getBody();
+
 	return $res;
 }
 
@@ -72,9 +93,75 @@ function job_list(CRObject $rule)
 		$res['errno'] = Code::NO_PRIVILEGE;
 		return $res;
 	}
-	$res['jobs'] = JobManager::gets($rule);
-	$res['count'] = JobManager::count($rule);
-	$res['errno'] = $res['jobs'] === null ? Code::FAIL : Code::SUCCESS;
+
+
+	$spider = new Spider();
+	$spider->doGet(YAO_SCHEDULER_ADDR . '?action=jobs');
+	$msg = json_decode($spider->getBody(), true);
+
+
+	if ($msg['code'] !== 0) {
+		$res['errno'] = $msg['code'];
+		$res['msg'] = $msg['error'];
+		return $res;
+	}
+
+	$res['jobs'] = array_reverse($msg['jobs']);
+	for ($i = 0; $i < sizeof($res['jobs']); $i++) {
+		$res['jobs'][$i]['tasks'] = json_encode($res['jobs'][$i]['tasks']);
+		if ($res['jobs'][$i]['run_before'] === 0) {
+			$res['jobs'][$i]['run_before'] = null;
+		}
+	}
+	$res['errno'] = Code::SUCCESS;
+
+	//$res['jobs'] = JobManager::gets($rule);
+	//$res['count'] = JobManager::count($rule);
+	//$res['errno'] = $res['jobs'] === null ? Code::FAIL : Code::SUCCESS;
+	return $res;
+}
+
+function job_status(CRObject $job)
+{
+	if (!AccessController::hasAccess(Session::get('role', 'visitor'), 'job.list')) {
+		$res['errno'] = Code::NO_PRIVILEGE;
+		return $res;
+	}
+
+	$spider = new Spider();
+	$spider->doGet(YAO_SCHEDULER_ADDR . '?action=job_status&id=' . $job->get('name'));
+	$msg = json_decode($spider->getBody(), true);
+
+	if ($msg['code'] !== 0) {
+		$res['errno'] = $msg['code'];
+		$res['msg'] = $msg['error'];
+		return $res;
+	}
+
+	$res['tasks'] = array_reverse($msg['status']);
+	$res['errno'] = Code::SUCCESS;
+	return $res;
+}
+
+function task_logs(CRObject $job)
+{
+	if (!AccessController::hasAccess(Session::get('role', 'visitor'), 'job.list')) {
+		$res['errno'] = Code::NO_PRIVILEGE;
+		return $res;
+	}
+
+	$spider = new Spider();
+	$spider->doGet(YAO_SCHEDULER_ADDR . '?action=task_logs&job=' . $job->get('job') . '&task=' . $job->get('task'));
+	$msg = json_decode($spider->getBody(), true);
+
+	if ($msg['code'] !== 0) {
+		$res['errno'] = $msg['code'];
+		$res['msg'] = $msg['error'];
+		return $res;
+	}
+
+	$res['logs'] = $msg['logs'];
+	$res['errno'] = Code::SUCCESS;
 	return $res;
 }
 

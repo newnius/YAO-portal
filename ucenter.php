@@ -27,6 +27,9 @@ if (isset($_GET['logs'])) {
 } elseif (isset($_GET['logs_all'])) {
 	$page_type = 'logs_all';
 
+} elseif (isset($_GET['summary'])) {
+	$page_type = 'summary';
+
 } elseif (isset($_GET['jobs'])) {
 	$page_type = 'jobs';
 
@@ -128,6 +131,34 @@ foreach ($entries as $entry) {
 							<div class="panel-body">
 								<h4 class="text-info">Notices</h4>
 								<p>Nothing new here.</p>
+							</div>
+						</div>
+					</div>
+
+				<?php } elseif ($page_type === 'summary') { ?>
+					<div id="jobs">
+						<div class="panel panel-default">
+							<div class="panel-heading">Summary</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-4" style="height: 200px">CPU
+										<canvas id="summary-chart-cpu"></canvas>
+									</div>
+									<div class="col-md-4">
+										Jobs
+										<canvas id="summary-chart-jobs"></canvas>
+									</div>
+									<div class="col-md-4">Mem
+										<canvas id="summary-chart-mem"></canvas>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4">GPU CPU</div>
+									<div class="col-md-4">GPUs
+										<canvas id="summary-chart-gpu"></canvas>
+									</div>
+									<div class="col-md-4">GPU Mem</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -247,10 +278,12 @@ foreach ($entries as $entry) {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.12.1/dist/extensions/mobile/bootstrap-table-mobile.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.12.1/dist/extensions/export/bootstrap-table-export.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.10.1/tableExport.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
 <script src="static/job.js"></script>
 <script src="static/agent.js"></script>
 <script src="static/workspace.js"></script>
+<script src="static/summary.js"></script>
 <script src="static/ucenter.js"></script>
 </body>
 </html>

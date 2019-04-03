@@ -258,9 +258,9 @@ function load_job_status(name) {
 		url: window.config.BASE_URL + '/service?action=job_status&name=' + name,
 		responseHandler: jobStatusResponseHandler,
 		sidePagination: 'server',
-		cache: false,
+		cache: true,
 		striped: true,
-		pagination: false,
+		pagination: true,
 		pageSize: 10,
 		pageList: [10, 25, 50, 100, 200],
 		search: false,
@@ -285,13 +285,13 @@ function load_job_status(name) {
 			title: 'Image',
 			align: 'center',
 			valign: 'middle',
-			visible: false,
+			visible: false
 		}, {
 			field: 'image_digest',
 			title: 'Image Version',
 			align: 'center',
 			valign: 'middle',
-			visible: false,
+			visible: false
 		}, {
 			field: 'hostname',
 			title: 'Hostname',

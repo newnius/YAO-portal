@@ -7,6 +7,10 @@ $(function () {
 		case "logs_all":
 			load_logs('all');
 			break;
+		case "summary":
+			register_events_summary();
+			summary_render();
+			break;
 		case "jobs":
 			register_events_job();
 			load_jobs('self');

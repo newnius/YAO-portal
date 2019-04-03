@@ -138,7 +138,33 @@ function job_status(CRObject $job)
 		return $res;
 	}
 
-	$res['tasks'] = array_reverse($msg['status']);
+	$res['tasks'] = $msg['status'];
+	$res['errno'] = Code::SUCCESS;
+	return $res;
+}
+
+function summary_get()
+{
+	if (!AccessController::hasAccess(Session::get('role', 'visitor'), 'system.summary')) {
+		$res['errno'] = Code::NO_PRIVILEGE;
+		return $res;
+	}
+
+	$spider = new Spider();
+	$spider->doGet(YAO_SCHEDULER_ADDR . '?action=summary');
+	$msg = json_decode($spider->getBody(), true);
+
+	if ($msg['code'] !== 0) {
+		$res['errno'] = $msg['code'];
+		$res['msg'] = $msg['error'];
+		return $res;
+	}
+
+	$res['jobs']['finished'] = $msg['jobs_finished'];
+	$res['jobs']['running'] = $msg['jobs_running'];
+	$res['jobs']['pending'] = $msg['jobs_pending'];
+	$res['gpu']['free'] = $msg['gpu_free'];
+	$res['gpu']['using'] = $msg['gpu_using'];
 	$res['errno'] = Code::SUCCESS;
 	return $res;
 }

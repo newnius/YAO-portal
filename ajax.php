@@ -96,6 +96,10 @@ switch ($action) {
 		$res = job_status($job);
 		break;
 
+	case 'summary_get':
+		$res = summary_get();
+		break;
+
 	case 'task_logs':
 		$task = new CRObject();
 		$task->set('job', cr_get_GET('job'));

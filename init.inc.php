@@ -70,6 +70,9 @@ function init_accessMap()
 		'job.list' => array('root', 'admin', 'developer', 'normal'),
 		'job.submit' => array('root', 'admin', 'developer', 'normal'),
 
+		/* system */
+		'system.summary' => array('root', 'admin', 'developer', 'normal'),
+
 		/* agent */
 		'agent.list' => array('root', 'admin', 'normal'),
 		'agent.add' => array('root', 'admin'),

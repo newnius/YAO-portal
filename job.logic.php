@@ -22,13 +22,13 @@ function job_submit(CRObject $job)
 	}
 	$job->set('created_by', Session::get('uid'));
 	$job->set('created_at', time());
-	$res['errno'] = JobManager::add($job) ? Code::SUCCESS : Code::UNKNOWN_ERROR;
-	$log = new CRObject();
-	$log->set('scope', Session::get('uid'));
-	$log->set('tag', 'job.submit');
-	$content = array('job' => $job, 'response' => $res['errno']);
-	$log->set('content', json_encode($content));
-	CRLogger::log($log);
+//	$res['errno'] = JobManager::add($job) ? Code::SUCCESS : Code::UNKNOWN_ERROR;
+//	$log = new CRObject();
+//	$log->set('scope', Session::get('uid'));
+//	$log->set('tag', 'job.submit');
+//	$content = array('job' => $job, 'response' => $res['errno']);
+//	$log->set('content', json_encode($content));
+//	CRLogger::log($log);
 
 	/* notify YAO-scheduler */
 	$spider = new Spider();
@@ -41,7 +41,7 @@ function job_submit(CRObject $job)
 		$tasks[$i] = $task;
 	}
 	$job->set('tasks', $tasks);
-	$job->set('workspace', $job->getInt('workspace'));
+	$job->set('workspace', $job->get('workspace'));
 	$job->set('virtual_cluster', $job->getInt('virtual_cluster'));
 	$job->set('priority', $job->getInt('priority'));
 	$job->set('run_before', $job->getInt('run_before'));

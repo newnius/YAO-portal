@@ -72,7 +72,6 @@ switch ($action) {
 		$job->set('virtual_cluster', cr_get_POST('cluster'));
 		$job->set('workspace', cr_get_POST('workspace'));
 		$job->set('priority', cr_get_POST('priority'));
-		$job->set('image', cr_get_POST('image'));
 		$job->set('run_before', cr_get_POST('run_before'));
 		$job->set('tasks', cr_get_POST('tasks'));
 		$res = job_submit($job);

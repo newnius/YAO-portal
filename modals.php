@@ -65,24 +65,17 @@
 						<input type="text" id="form-job-name" class="form-control" maxlength="64"
 						       placeholder="A readable job name" required/>
 					</div>
-					<label>Docker Image</label>
-					<div class="form-group form-group-lg">
-						<label for="form-job-image" class="sr-only">Docker Image</label>
-						<input type="text" id="form-job-image" class="form-control" maxlength="256"
-						       placeholder="eg. yao/tensorflow:1.12" required/>
-					</div>
 					<label>Workspace</label>
 					<div class="form-group form-group-lg">
 						<label for="form-job-workspace" class="sr-only">Workspace</label>
-						<select id="form-job-workspace" class="form-control">
-							<option value="1">Workspace 1</option>
-						</select>
+						<input id="form-job-workspace" type="text" class="form-control"
+						       placeholder="git repo" required/>
 					</div>
 					<label>Virtual Cluster</label>
 					<div class="form-group form-group-lg">
 						<label for="form-job-cluster" class="sr-only">Virtual Cluster</label>
 						<select id="form-job-cluster" class="form-control">
-							<option value="1">Cluster 1</option>
+							<option value="1">default</option>
 						</select>
 					</div>
 					<label>Priority</label>
@@ -95,8 +88,8 @@
 							<option value="1">Low</option>
 						</select>
 					</div>
-					<label>Run Before</label>
-					<div class="form-group form-group-lg">
+					<label class="hidden">Run Before</label>
+					<div class="form-group form-group-lg hidden">
 						<div class='input-group date date-picker'>
 							<label for="form-job-run-before" class="sr-only">Run Before</label>
 							<input type='text' class="form-control" placeholder="Run this job before"
@@ -107,48 +100,56 @@
 							</div>
 						</div>
 					</div>
-					<label>Tasks</label>
-					<div class="" id="form-job-tasks">
+					<label>Environment</label>
+					<div id="form-job-tasks">
 						<div class="row">
-							<div class="col-md-2">
-								<label>Name</label>
+							<div class="col-md-6">
+								<label>Docker Image</label>
 								<div class="form-group">
-									<input type="text" class="form-control" maxlength="32"
-									       placeholder="Task Name & Node Name" required/>
+									<input type="text" class="form-control task-image" maxlength="256"
+									       placeholder="eg. yao/tensorflow:1.12" required/>
 								</div>
 							</div>
-							<div class="col-md-2">
+							<div class="col-md-6">
 								<label>CMD</label>
 								<div class="form-group">
-									<input type="text" class="form-control" maxlength="255"
+									<input type="text" class="form-control task-cmd" maxlength="255"
 									       placeholder="Command to bring up task" required/>
+								</div>
+							</div>
+
+							<div class="col-md-4 hidden">
+								<label>Name</label>
+								<div class="form-group">
+									<input type="text" class="form-control task-name" maxlength="32"
+									       placeholder="Task Name & Node Name" value="node1" required/>
 								</div>
 							</div>
 							<div class="col-md-2">
 								<label>CPU Number</label>
 								<div class="form-group">
-									<input type="number" class="form-control" step="1" min="1"
+									<input type="number" class="form-control task-cpu" step="1" min="1"
 									       placeholder="number of CPU required" required/>
 								</div>
 							</div>
 							<div class="col-md-2">
 								<label>Memory</label>
 								<div class="form-group">
-									<input type="number" class="form-control" step="512" min="512"
+									<input type="number" class="form-control task-mem" step="512" min="512"
 									       placeholder="MB" required/>
 								</div>
 							</div>
 							<div class="col-md-2">
 								<label>GPU Number</label>
 								<div class="form-group">
-									<input type="number" class="form-control" step="1" min="1"
+									<input type="number" class="form-control task-gpu-num" step="1" min="1" value="1"
 									       placeholder="number of GPU cards required" required/>
 								</div>
 							</div>
 							<div class="col-md-2">
 								<label>GPU Memory</label>
 								<div class="form-group">
-									<input type="number" class="form-control" step="512" min="512"
+									<input type="number" class="form-control task-gpu-mem" step="512" min="512"
 									       placeholder="MB" required/>
 								</div>
 							</div>

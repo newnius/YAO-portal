@@ -5,7 +5,6 @@ function register_events_job() {
 
 	$("#form-job-submit").click(function (e) {
 		var name = $('#form-job-name').val();
-		var image = $('#form-job-image').val();
 		var workspace = $('#form-job-workspace').val();
 		var cluster = $('#form-job-cluster').val();
 		var priority = $('#form-job-priority').val();
@@ -15,14 +14,14 @@ function register_events_job() {
 		}
 		var tasks = [];
 		$('#form-job-tasks').find('.row').each(function () {
-			var vals = $(this).find('input');
 			var task = {};
-			task['name'] = vals.eq(0).val();
-			task['cmd'] = vals.eq(1).val();
-			task['cpu_number'] = vals.eq(2).val();
-			task['memory'] = vals.eq(3).val();
-			task['gpu_number'] = vals.eq(4).val();
-			task['gpu_memory'] = vals.eq(5).val();
+			task['name'] = $(this).find('.task-name').eq(0).val();
+			task['image'] = $(this).find('.task-image').eq(0).val();
+			task['cmd'] = $(this).find('.task-cmd').eq(0).val();
+			task['cpu_number'] = $(this).find('.task-cpu').eq(0).val();
+			task['memory'] = $(this).find('.task-mem').eq(0).val();
+			task['gpu_number'] = $(this).find('.task-gpu-num').eq(0).val();
+			task['gpu_memory'] = $(this).find('.task-gpu-mem').eq(0).val();
 			tasks.push(task);
 		});
 
@@ -35,7 +34,6 @@ function register_events_job() {
 			type: 'POST',
 			data: {
 				name: name,
-				image: image,
 				workspace: workspace,
 				cluster: cluster,
 				priority: priority,
@@ -94,13 +92,6 @@ function load_jobs(scope) {
 			title: 'Name',
 			align: 'center',
 			valign: 'middle',
-			escape: true
-		}, {
-			field: 'image',
-			title: 'Docker Image',
-			align: 'center',
-			valign: 'middle',
-			visible: false,
 			escape: true
 		}, {
 			field: 'workspace',

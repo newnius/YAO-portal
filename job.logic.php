@@ -48,8 +48,14 @@ function job_submit(CRObject $job)
 	$job->set('created_by', $job->getInt('created_by'));
 	$data['job'] = json_encode($job);
 	$spider->doPost(YAO_SCHEDULER_ADDR . '?action=job_submit', $data);
-	$res['message'] = $spider->getBody();
+	$msg = json_decode($spider->getBody(), true);
 
+	$res['errno'] = Code::SUCCESS;
+	if ($msg['code'] !== 0) {
+		$res['errno'] = Code::FAIL;
+		$res['msg'] = $msg['error'];
+		return $res;
+	}
 	return $res;
 }
 
@@ -59,21 +65,22 @@ function job_stop(CRObject $job)
 		$res['errno'] = Code::NO_PRIVILEGE;
 		return $res;
 	}
-	$origin = JobManager::get($job);
-	if ($origin === null) {
-		$res['errno'] = Code::RECORD_NOT_EXIST;
-	} else if ($origin['created_by'] !== Session::get('uid') && !AccessController::hasAccess(Session::get('role', 'visitor'), 'job.stop_others')) {
-		$res['errno'] = Code::NO_PRIVILEGE;
-	} else if ($origin['status'] !== '0' && $origin['status'] !== '1') {
-		$res['errno'] = Code::RECORD_REMOVED;
-	} else {
-		$origin['status'] = 4;
-		$res['errno'] = JobManager::update(new CRObject($origin)) ? Code::SUCCESS : Code::UNKNOWN_ERROR;
+	/* TODO: permission check */
+	$spider = new Spider();
+	$data['id'] = $job->get('id', '');
+	$spider->doPost(YAO_SCHEDULER_ADDR . '?action=job_stop', $data);
+	$msg = json_decode($spider->getBody(), true);
+
+	$res['errno'] = Code::SUCCESS;
+	if ($msg['code'] !== 0) {
+		$res['errno'] = Code::FAIL;
+		$res['msg'] = $msg['error'];
+		return $res;
 	}
 	$log = new CRObject();
 	$log->set('scope', Session::get('uid'));
 	$log->set('tag', 'job.stop');
-	$content = array('id' => $job->getInt('id'), 'response' => $res['errno']);
+	$content = array('id' => $job->get('id'), 'response' => $res['errno']);
 	$log->set('content', json_encode($content));
 	CRLogger::log($log);
 	return $res;

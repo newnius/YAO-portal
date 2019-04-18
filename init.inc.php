@@ -69,6 +69,8 @@ function init_accessMap()
 		/* job */
 		'job.list' => array('root', 'admin', 'developer', 'normal'),
 		'job.submit' => array('root', 'admin', 'developer', 'normal'),
+		'job.stop' => array('root', 'admin', 'developer', 'normal'),
+		'job.stop_others' => array('root', 'admin', 'developer', 'normal'),
 
 		/* system */
 		'system.summary' => array('root', 'admin', 'developer', 'normal'),

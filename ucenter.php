@@ -17,7 +17,7 @@ if (Session::get('uid') === null) {
 	exit;
 }
 
-$page_type = 'home';
+$page_type = 'summary';
 $uid = Session::get('uid');
 $nickname = Session::get('nickname');
 
@@ -48,13 +48,9 @@ if (isset($_GET['logs'])) {
 } elseif (isset($_GET['workspaces'])) {
 	$page_type = 'workspaces';
 
-} elseif (isset($_GET['home'])) {
-	$page_type = 'home';
-
 }
 
 $entries = array(
-	array('home', 'Home'),
 	array('summary', 'Summary'),
 	array('jobs', 'Jobs'),
 	array('workspaces', 'Workspaces'),
@@ -117,25 +113,7 @@ foreach ($entries as $entry) {
 					</div>
 				</div>
 
-				<?php if ($page_type === 'home') { ?>
-					<div id="home">
-						<div class="panel panel-default">
-							<div class="panel-heading">Welcome page</div>
-							<div class="panel-body">
-								Welcome back, <?php echo htmlspecialchars($nickname) ?>.<br/>
-								Now: &nbsp; <?php echo date('H:i:s', time()) ?>
-							</div>
-						</div>
-						<div class="panel panel-default">
-							<div class="panel-heading">Notice</div>
-							<div class="panel-body">
-								<h4 class="text-info">Notices</h4>
-								<p>Nothing new here.</p>
-							</div>
-						</div>
-					</div>
-
-				<?php } elseif ($page_type === 'summary') { ?>
+				<?php if ($page_type === 'summary') { ?>
 					<div id="jobs">
 						<div class="panel panel-default">
 							<div class="panel-heading">Summary</div>

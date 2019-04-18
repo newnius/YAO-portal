@@ -105,16 +105,16 @@
 						<div class="row">
 							<div class="col-md-6">
 								<label>Docker Image</label>
-								<div class="form-group">
-									<input type="text" class="form-control task-image" maxlength="256"
-									       placeholder="eg. yao/tensorflow:1.12" required/>
-								</div>
+								<select class="form-control form-control task-image" required>
+									<option value="quickdeploy/yao-tensorflow:1.12" selected>quickdeploy/yao-tensorflow:1.12</option>
+									<option value="nvidia/cuda:9.0-base">nvidia/cuda:9.0-base</option>
+								</select>
 							</div>
 							<div class="col-md-6">
 								<label>CMD</label>
 								<div class="form-group">
 									<input type="text" class="form-control task-cmd" maxlength="255"
-									       placeholder="Command to bring up task" required/>
+									       placeholder="Command to bring up task"/>
 								</div>
 							</div>
 
@@ -128,15 +128,15 @@
 							<div class="col-md-2">
 								<label>CPU Number</label>
 								<div class="form-group">
-									<input type="number" class="form-control task-cpu" step="1" min="1"
+									<input type="number" class="form-control task-cpu" step="1" min="1" value="1"
 									       placeholder="number of CPU required" required/>
 								</div>
 							</div>
 							<div class="col-md-2">
 								<label>Memory</label>
 								<div class="form-group">
-									<input type="number" class="form-control task-mem" step="512" min="512"
-									       placeholder="MB" required/>
+									<input type="number" class="form-control task-mem" step="1024" min="1024"
+									       value="4096" placeholder="MB" required/>
 								</div>
 							</div>
 							<div class="col-md-2">
@@ -149,8 +149,8 @@
 							<div class="col-md-2">
 								<label>GPU Memory</label>
 								<div class="form-group">
-									<input type="number" class="form-control task-gpu-mem" step="512" min="512"
-									       placeholder="MB" required/>
+									<input type="number" class="form-control task-gpu-mem" step="1024" min="1024"
+									       value="4096" placeholder="MB" required/>
 								</div>
 							</div>
 						</div>

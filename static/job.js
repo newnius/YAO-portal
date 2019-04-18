@@ -26,6 +26,13 @@ function register_events_job() {
 		});
 
 		/* TODO validate form */
+		if (name.length === 0) {
+			return true;
+		}
+		if (workspace.length === 0) {
+			return true;
+		}
+
 
 		$('#modal-job').modal('hide');
 
@@ -227,14 +234,14 @@ window.jobOperateEvents = {
 		var ajax = $.ajax({
 			url: window.config.BASE_URL + "/service?action=job_stop",
 			type: 'POST',
-			data: {id: row.id}
+			data: {id: row.name}
 		});
 		ajax.done(function (res) {
 			if (res["errno"] !== 0) {
 				$("#modal-msg-content").html(res["msg"]);
 				$("#modal-msg").modal('show');
 			}
-			$('#table-link').bootstrapTable("refresh");
+			$('#table-job').bootstrapTable("refresh");
 		});
 		ajax.fail(function (jqXHR, textStatus) {
 			$("#modal-msg-content").html("Request failed : " + jqXHR.statusText);

@@ -27,6 +27,10 @@ $(function () {
 			register_events_workspace();
 			load_workspaces('');
 			break;
+		case "resources":
+			register_events_resource();
+			load_resources();
+			break;
 		default:
 			break;
 	}

@@ -1,5 +1,14 @@
 function register_events_job() {
 	$('#btn-job-add').click(function (e) {
+		cb = function (workspaces) {
+			$('#form-job-workspace').children().remove();
+			$.each(workspaces, function (i, workspace) {
+				var newGroupOption = '<option value="' + workspace.git_repo + '">' + workspace.name + '</option>';
+				$('#form-job-workspace').append(newGroupOption);
+			});
+
+		};
+		wordspace_gets(null, cb);
 		$('#modal-job').modal('show');
 	});
 
@@ -158,7 +167,7 @@ var workspaceFormatter = function (workspace) {
 };
 
 var clusterFormatter = function (cluster) {
-	return cluster;
+	return 'default';
 };
 
 var priorityFormatter = function (status) {
@@ -219,8 +228,9 @@ function jobOperateFormatter(value, row, index) {
 
 window.jobOperateEvents = {
 	'click .config': function (e, value, row, index) {
-		row.tasks = JSON.parse(row.tasks);
-		var formattedData = JSON.stringify(row, null, '\t');
+		var tmp = jQuery.extend(true, {}, row);
+		tmp.tasks = JSON.parse(tmp.tasks);
+		var formattedData = JSON.stringify(tmp, null, '\t');
 		$('#modal-job-description-content').text(formattedData);
 		$('#modal-job-description').modal('show');
 	},

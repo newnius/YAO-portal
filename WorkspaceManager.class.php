@@ -15,21 +15,20 @@ class WorkspaceManager
 	public static function add(CRObject $workspace)
 	{
 		$name = $workspace->get('name');
-		$content = $workspace->get('content');
-		$virtual_cluster = $workspace->getInt('virtual_cluster');
-		$permission = $workspace->getInt('permission');
+		$type = $workspace->get('type');
+		$git_repo = $workspace->get('git_repo');
 		$created_at = $workspace->getInt('created_at', time());
 		$updated_at = $workspace->getInt('updated_at', time());
 		$created_by = $workspace->get('created_by');
 
 		$key_values = array(
-			'name' => '?', 'content' => '?', 'virtual_cluster' => '?', 'permission' => '?',
+			'name' => '?', 'type' => '?', 'git_repo' => '?',
 			'created_at' => '?', 'updated_at' => '?', 'created_by' => '?'
 		);
 		$builder = new SQLBuilder();
 		$builder->insert(self::$table, $key_values);
 		$sql = $builder->build();
-		$params = array($name, $content, $virtual_cluster, $permission, $created_at, $updated_at, $created_by);
+		$params = array($name, $type, $git_repo, $created_at, $updated_at, $created_by);
 		return (new MysqlPDO())->execute($sql, $params);
 	}
 
@@ -87,19 +86,19 @@ class WorkspaceManager
 	{
 		$id = $workspace->getInt('id');
 		$name = $workspace->get('name');
-		$content = $workspace->get('content');
-		$permission = $workspace->getInt('permission');
+		$type = $workspace->get('type');
+		$git_repo = $workspace->get('git_repo');
 		$updated_at = $workspace->getInt('updated_at', time());
 
 		$key_values = array(
-			'name' => '?', 'content' => '?', 'permission' => '?', 'updated_at' => '?'
+			'name' => '?', 'type' => '?', 'git_repo' => '?', 'updated_at' => '?'
 		);
 		$where = array('id' => '?');
 		$builder = new SQLBuilder();
 		$builder->update(self::$table, $key_values);
 		$builder->where($where);
 		$sql = $builder->build();
-		$params = array($name, $content, $permission, $updated_at, $id);
+		$params = array($name, $type, $git_repo, $updated_at, $id);
 		return (new MysqlPDO())->execute($sql, $params);
 	}
 

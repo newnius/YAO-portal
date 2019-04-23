@@ -16,7 +16,7 @@ require_once('secure.inc.php');
 	<div class="container">
 
 		<div id="main" class="form ui-widget load-overlay container">
-			<h2>YAO-Yet Another Octopus</h2>
+			<h2 style="text-align: center">YAO---Yet Another Octopus</h2>
 		</div>
 	</div> <!-- /container -->
 	<!--This div exists to avoid footer from covering main body-->

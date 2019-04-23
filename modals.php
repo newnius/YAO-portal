@@ -31,6 +31,23 @@
 	</div>
 </div>
 
+<!-- node GPU detail modal -->
+<div class="modal fade" id="modal-resource-gpu-detail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content panel-info">
+			<div class="modal-header panel-heading">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">GPUs on this node</h4>
+			</div>
+			<div class="modal-body">
+				<pre id="modal-resource-gpu-detail-content"></pre>
+			</div>
+		</div>
+	</div>
+</div>
+
 <!-- task logs modal -->
 <div class="modal fade" id="modal-task-logs" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
@@ -68,8 +85,7 @@
 					<label>Workspace</label>
 					<div class="form-group form-group-lg">
 						<label for="form-job-workspace" class="sr-only">Workspace</label>
-						<input id="form-job-workspace" type="text" class="form-control"
-						       placeholder="git repo" required/>
+						<select id="form-job-workspace" class="form-control"></select>
 					</div>
 					<label>Virtual Cluster</label>
 					<div class="form-group form-group-lg">
@@ -106,7 +122,9 @@
 							<div class="col-md-6">
 								<label>Docker Image</label>
 								<select class="form-control form-control task-image" required>
-									<option value="quickdeploy/yao-tensorflow:1.12" selected>quickdeploy/yao-tensorflow:1.12</option>
+									<option value="quickdeploy/yao-tensorflow:1.12" selected>
+										quickdeploy/yao-tensorflow:1.12
+									</option>
 									<option value="nvidia/cuda:9.0-base">nvidia/cuda:9.0-base</option>
 								</select>
 							</div>
@@ -228,17 +246,18 @@
 						<input type="text" id="form-workspace-name" class="form-control" maxlength="64"
 						       placeholder="" required/>
 					</div>
-					<label>Virtual Cluster</label>
+					<label>Type</label>
 					<div class="form-group form-group-lg">
-						<label for="form-workspace-virtual-cluster" class="sr-only">Virtual Cluster</label>
-						<select id="form-workspace-virtual-cluster" class="form-control">
-							<option value="0">default</option>
+						<label for="form-workspace-type" class="sr-only">Type</label>
+						<select id="form-workspace-type" class="form-control">
+							<option value="git">git</option>
 						</select>
 					</div>
-					<label>Permission</label>
+					<label>Repo</label>
 					<div class="form-group form-group-lg">
-						<label for="form-workspace-permission" class="sr-only">Token</label>
-						<input type="number" id="form-workspace-permission" class="form-control" placeholder=""/>
+						<label for="form-workspace-git-repo" class="sr-only">Git Repo</label>
+						<input type="text" id="form-workspace-git-repo" class="form-control"
+						       placeholder="http://192.168.100.100:3000/newnius/tf.git"/>
 					</div>
 					<div>
 						<input type="hidden" id="form-workspace-submit-type"/>

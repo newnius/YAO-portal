@@ -63,3 +63,24 @@ function agent_list(CRObject $rule)
 	$res['errno'] = $res['agents'] === null ? Code::FAIL : Code::SUCCESS;
 	return $res;
 }
+
+function resource_list()
+{
+	if (!AccessController::hasAccess(Session::get('role', 'visitor'), 'system.summary')) {
+		$res['errno'] = Code::NO_PRIVILEGE;
+		return $res;
+	}
+
+	$spider = new Spider();
+	$spider->doGet(YAO_SCHEDULER_ADDR . '?action=resource_list');
+	$msg = json_decode($spider->getBody(), true);
+
+	if ($msg['code'] !== 0) {
+		$res['errno'] = $msg['code'] !== null ? $msg['code'] : Code::UNKNOWN_ERROR;
+		$res['msg'] = $msg['error'];
+		return $res;
+	}
+	$res['resources'] = $msg['resources'];
+	$res['errno'] = Code::SUCCESS;
+	return $res;
+}

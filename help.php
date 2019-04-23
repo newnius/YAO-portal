@@ -67,9 +67,7 @@ require_once('secure.inc.php');
 				<div id="feedback" class="panel panel-default">
 					<div class="panel-heading">Feedback</div>
 					<div class="panel-body">
-						<p>Contact with
-							<a href="mailto:<?= FEEDBACK_EMAIL ?>?subject=From LS"><?= FEEDBACK_EMAIL ?></a>
-						</p>
+						<p>This is feedback.</p>
 					</div>
 				</div>
 

@@ -22,13 +22,6 @@ function job_submit(CRObject $job)
 	}
 	$job->set('created_by', Session::get('uid'));
 	$job->set('created_at', time());
-//	$res['errno'] = JobManager::add($job) ? Code::SUCCESS : Code::UNKNOWN_ERROR;
-//	$log = new CRObject();
-//	$log->set('scope', Session::get('uid'));
-//	$log->set('tag', 'job.submit');
-//	$content = array('job' => $job, 'response' => $res['errno']);
-//	$log->set('content', json_encode($content));
-//	CRLogger::log($log);
 
 	/* notify YAO-scheduler */
 	$spider = new Spider();
@@ -54,8 +47,14 @@ function job_submit(CRObject $job)
 	if ($msg['code'] !== 0) {
 		$res['errno'] = Code::FAIL;
 		$res['msg'] = $msg['error'];
-		return $res;
 	}
+
+	$log = new CRObject();
+	$log->set('scope', Session::get('uid'));
+	$log->set('tag', 'job.submit');
+	$content = array('job' => $job, 'response' => $res['errno']);
+	$log->set('content', json_encode($content));
+	CRLogger::log($log);
 	return $res;
 }
 
@@ -108,7 +107,7 @@ function job_list(CRObject $rule)
 
 
 	if ($msg['code'] !== 0) {
-		$res['errno'] = $msg['code'];
+		$res['errno'] = $msg['code'] !== null ? $msg['code'] : Code::UNKNOWN_ERROR;
 		$res['msg'] = $msg['error'];
 		return $res;
 	}
@@ -121,10 +120,6 @@ function job_list(CRObject $rule)
 		}
 	}
 	$res['errno'] = Code::SUCCESS;
-
-	//$res['jobs'] = JobManager::gets($rule);
-	//$res['count'] = JobManager::count($rule);
-	//$res['errno'] = $res['jobs'] === null ? Code::FAIL : Code::SUCCESS;
 	return $res;
 }
 
@@ -162,7 +157,7 @@ function summary_get()
 	$msg = json_decode($spider->getBody(), true);
 
 	if ($msg['code'] !== 0) {
-		$res['errno'] = $msg['code'];
+		$res['errno'] = $msg['code'] !== null ? $msg['code'] : Code::UNKNOWN_ERROR;
 		$res['msg'] = $msg['error'];
 		return $res;
 	}

@@ -17,9 +17,7 @@ MysqlPDO::configure($config);
 create_table_user();
 create_table_workspace();
 create_table_cluster();
-create_table_job();
 create_table_agent();
-create_table_resource();
 create_table_model();
 create_table_log();
 
@@ -61,14 +59,12 @@ function create_table_workspace()
 			'CREATE TABLE `yao_workspace`(
 				`id` int AUTO_INCREMENT,
 				 PRIMARY KEY(`id`),
-                `name` varchar(64) NOT NULL,
-                `content` json NOT NULL,
+                `name` VARCHAR(64) NOT NULL,
+                `type` VARCHAR(16) NOT NULL,
                 `created_at` BIGINT NOT NULL,
                 `updated_at` BIGINT NOT NULL,
-				`virtual_cluster` varchar(64) NOT NULL,
-				 INDEX(`virtual_cluster`),
+				`git_repo` varchar(256),
 				`created_by` int NOT NULL,
-				`permission` int, /* [0, 1, 2] * 10 + [0, 1, 2] => [-, r, w] * [-, r, w] */
 				`version` int NOT NULL DEFAULT 0 /* for upgrade purpose */
 			)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci',
 	);
@@ -88,25 +84,7 @@ function create_table_cluster()
 				`reserved_nodes` json NOT NULL,
 				`quota_per_day` int NOT NULL,
 				`quota_used` int NOT NULL,
-				
 				`version` int NOT NULL DEFAULT 0 /* for upgrade purpose */
-			)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci',
-	);
-	execute_sqls($sqls);
-}
-
-function create_table_resource()
-{
-	$sqls = array(
-//        'DROP `yao_resource`' => 'DROP TABLE IF EXISTS `yao_resource`',
-		'CREATE `yao_resource`' =>
-			'CREATE TABLE `yao_resource`(
-				`id` int AUTO_INCREMENT,
-				 PRIMARY KEY(`id`),
-                `ip` bigint NOT NULL,
-				`type` int NOT NULL, /* 0-CPU, 1-GPU */
-				`model` VARCHAR(64) NOT NULL, /* eg. i7, P100 */
-				`memory` int NOT NULL /* MB */
 			)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci',
 	);
 	execute_sqls($sqls);
@@ -144,31 +122,6 @@ function create_table_model()
 				`created_at` BIGINT NOT NULL,
 				`created_by` int NOT NULL,
 				`permission` int /* [0, 1, 2] * 10 + [0, 1, 2] => [-, r, w] * [-, r, w] */
-			)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci',
-	);
-	execute_sqls($sqls);
-}
-
-function create_table_job()
-{
-	$sqls = array(
-//        'DROP `yao_job`' => 'DROP TABLE IF EXISTS `yao_job`',
-		'CREATE `yao_job`' =>
-			'CREATE TABLE `yao_job`(
-				`id` int AUTO_INCREMENT,
-				 PRIMARY KEY(`id`),
-                `name` varchar(64) NOT NULL,
-                `image` varchar(256) NOT NULL,
-                `tasks` json NOT NULL,
-                `workspace` int NOT NULL,
-                `virtual_cluster` int NOT NULL DEFAULT 0,
-                `priority` int NOT NULL DEFAULT 0,
-                `run_before` bigint,
-                `status` int NOT NULL DEFAULT 0,/* 0-submitted, 1-running, 2-finished, 3-failed, 4-stopped */
-                `created_at` BIGINT NOT NULL,
-                `updated_at` BIGINT,
-				`created_by` int,
-				`version` int NOT NULL DEFAULT 0 /* for upgrade purpose */
 			)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci',
 	);
 	execute_sqls($sqls);

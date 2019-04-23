@@ -14,12 +14,17 @@ $(function () {
 	$("#btn-oauth-login").click(function (e) {
 		e.preventDefault();
 		var ajax = $.ajax({
-			url: window.config.BASE_URL + "/service?action=oauth_get_url",
+			url: window.config.BASE_URL + "/service?action=user_login",
 			type: 'POST',
 			data: {}
 		});
 		ajax.done(function (res) {
-			window.location.href = res['url'];
+			if (res["errno"] !== 0) {
+				$("#modal-msg-content").html(res["msg"]);
+				$("#modal-msg").modal('show');
+			} else {
+				window.location.pathname = "/ucenter";
+			}
 		});
 	});
 

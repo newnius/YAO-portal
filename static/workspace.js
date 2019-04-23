@@ -1,15 +1,16 @@
 function register_events_workspace() {
 	$('#btn-workspace-add').click(function (e) {
 		$('#form-workspace-submit-type').val('add');
+		$('#form-workspace-name').val('');
+		$('#form-workspace-git-repo').val('');
 		$('#modal-workspace').modal('show');
 	});
 
 	$("#form-workspace-submit").click(function (e) {
 		var id = $('#form-workspace-id').val();
 		var name = $('#form-workspace-name').val();
-		var content = $('#form-workspace-content').val();
-		var virtual_cluster = $('#form-workspace-virtual-cluster').val();
-		var permission = $('#form-workspace-permission').val();
+		var type = $('#form-workspace-type').val();
+		var git_repo = $('#form-workspace-git-repo').val();
 
 		/* TODO validate form */
 
@@ -24,9 +25,8 @@ function register_events_workspace() {
 			data: {
 				id: id,
 				name: name,
-				content: "[]",
-				virtual_cluster: virtual_cluster,
-				permission: permission
+				type: type,
+				git_repo: git_repo
 			}
 		});
 		ajax.done(function (res) {
@@ -81,15 +81,17 @@ function load_workspaces(cluster) {
 			valign: 'middle',
 			escape: true
 		}, {
-			field: 'virtual_cluster',
-			title: 'Virtual Cluster',
+			field: 'type',
+			title: 'Type',
 			align: 'center',
 			valign: 'middle'
 		}, {
-			field: 'permission',
-			title: 'Permission',
+			field: 'git_repo',
+			title: 'Git Repo',
 			align: 'center',
-			valign: 'middle'
+			valign: 'middle',
+			escape: true,
+			visible: true
 		}, {
 			field: 'operate',
 			title: 'Operate',
@@ -121,15 +123,43 @@ function workspaceOperateFormatter(value, row, index) {
 	return div;
 }
 
+function wordspace_gets(cluster, cb) {
+	var ajax = $.ajax({
+		url: window.config.BASE_URL + '/service?action=workspace_list&who=' + cluster,
+		type: 'GET',
+		data: {}
+	});
+	ajax.done(function (res) {
+		if (res["errno"] !== 0) {
+			$("#modal-msg-content").html(res["msg"]);
+			$("#modal-msg").modal('show');
+		} else {
+			if (cb !== undefined) {
+				cb(res['workspaces']);
+			}
+		}
+	});
+	ajax.fail(function (jqXHR, textStatus) {
+		$("#modal-msg-content").html("Request failed : " + jqXHR.statusText);
+		$("#modal-msg").modal('show');
+	});
+}
+
 window.workspaceOperateEvents = {
 	'click .view': function (e, value, row, index) {
 		$('#form-workspace-id').val(row.id);
 		$('#form-workspace-submit-type').val('view');
+		$('#form-workspace-name').val(row.name);
+		$('#form-workspace-type').val(row.type);
+		$('#form-workspace-git-repo').val(row.git_repo);
 		$('#modal-workspace').modal('show');
 	},
 	'click .edit': function (e, value, row, index) {
 		$('#form-workspace-id').val(row.id);
 		$('#form-workspace-submit-type').val('view');
+		$('#form-workspace-name').val(row.name);
+		$('#form-workspace-type').val(row.type);
+		$('#form-workspace-git-repo').val(row.git_repo);
 		$('#modal-workspace').modal('show');
 	},
 	'click .remove': function (e, value, row, index) {

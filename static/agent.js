@@ -30,7 +30,6 @@ function register_events_agent() {
 				$("#modal-msg").modal('show');
 			}
 			$('#table-agent').bootstrapTable("refresh");
-
 		});
 		ajax.fail(function (jqXHR, textStatus) {
 			$("#modal-msg-content").html("Request failed : " + jqXHR.statusText);

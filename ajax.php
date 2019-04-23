@@ -128,6 +128,10 @@ switch ($action) {
 		$res = agent_remove($job);
 		break;
 
+	case 'resource_list':
+		$res = resource_list();
+		break;
+
 	case 'workspace_list':
 		$rule = new CRObject();
 		$rule->set('offset', cr_get_GET('offset'));
@@ -138,9 +142,8 @@ switch ($action) {
 	case 'workspace_add':
 		$workspace = new CRObject();
 		$workspace->set('name', cr_get_POST('name'));
-		$workspace->set('content', cr_get_POST('content'));
-		$workspace->set('virtual_cluster', cr_get_POST('virtual_cluster'));
-		$workspace->set('permission', cr_get_POST('permission'));
+		$workspace->set('type', cr_get_POST('type'));
+		$workspace->set('git_repo', cr_get_POST('git_repo'));
 		$res = workspace_add($workspace);
 		break;
 
@@ -148,9 +151,8 @@ switch ($action) {
 		$workspace = new CRObject();
 		$workspace->set('id', cr_get_POST('id'));
 		$workspace->set('name', cr_get_POST('name'));
-		$workspace->set('content', cr_get_POST('content'));
-		$workspace->set('virtual_cluster', cr_get_POST('virtual_cluster'));
-		$workspace->set('permission', cr_get_POST('permission'));
+		$workspace->set('type', cr_get_POST('type'));
+		$workspace->set('git_repo', cr_get_POST('git_repo'));
 		$res = workspace_update($workspace);
 		break;
 
@@ -175,6 +177,11 @@ switch ($action) {
 
 	case 'oauth_get_url':
 		$res = oauth_get_url();
+		break;
+
+	case 'user_login':
+		$user = new CRObject();
+		$res = user_login($user);
 		break;
 
 	default:

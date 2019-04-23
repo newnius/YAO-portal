@@ -7,6 +7,8 @@ function summary_render() {
 	var ctx_mem = document.getElementById('summary-chart-mem').getContext('2d');
 	var ctx_jobs = document.getElementById('summary-chart-jobs').getContext('2d');
 	var ctx_gpu = document.getElementById('summary-chart-gpu').getContext('2d');
+	var ctx_gpu_util = document.getElementById('summary-chart-gpu-util').getContext('2d');
+	var ctx_gpu_mem = document.getElementById('summary-chart-gpu-mem').getContext('2d');
 
 	var ajax = $.ajax({
 		url: window.config.BASE_URL + "/service?action=summary_get",
@@ -19,7 +21,7 @@ function summary_render() {
 			$("#modal-msg").modal('show');
 		}
 
-
+		/* CPU Load */
 		ctx_cpu.canvas.height = 200;
 		new Chart(ctx_cpu, {
 			"type": "line",
@@ -34,15 +36,19 @@ function summary_render() {
 				}]
 			},
 			"options": {
+				title: {
+					display: true,
+					text: 'GPU Load'
+				},
 				legend: {
 					display: false
 				},
-				maintainAspectRatio:false
-
+				maintainAspectRatio: false
 			}
 		});
 
 
+		/* Jobs */
 		var data = {
 			datasets: [{
 				data: Object.values(res['jobs']),
@@ -56,12 +62,69 @@ function summary_render() {
 			type: 'pie',
 			data: data,
 			options: {
+				title: {
+					display: true,
+					text: 'Jobs'
+				},
 				legend: {
 					display: false
 				}
 			}
 		});
 
+		/* Mem Using */
+		ctx_mem.canvas.height = 200;
+		new Chart(ctx_mem, {
+			"type": "line",
+			"data": {
+				"labels": ["January", "February", "March", "April", "May", "June", "July"],
+				"datasets": [{
+					"label": "My First Data set",
+					"data": [2, 0.5, 1.5, 0.81, 1.56, 1.55, 1.40],
+					"fill": true,
+					"borderColor": "rgb(75, 192, 192)",
+					"lineTension": 0.1
+				}]
+			},
+			"options": {
+				title: {
+					display: true,
+					text: 'MEM Using'
+				},
+				legend: {
+					display: false
+				},
+				maintainAspectRatio: false
+			}
+		});
+
+		/* GPU Util */
+		ctx_gpu_util.canvas.height = 200;
+		new Chart(ctx_gpu_util, {
+			"type": "line",
+			"data": {
+				"labels": ["January", "February", "March", "April", "May", "June", "July"],
+				"datasets": [{
+					"label": "My First Data set",
+					"data": [2, 0.5, 1.5, 0.81, 1.56, 1.55, 1.40],
+					"fill": true,
+					"borderColor": "rgb(75, 192, 192)",
+					"lineTension": 0.1
+				}]
+			},
+			"options": {
+				title: {
+					display: true,
+					text: 'GPU Utilization'
+				},
+				legend: {
+					display: false
+				},
+				maintainAspectRatio: false
+			}
+		});
+
+		/* GPUs */
 		var data2 = {
 			datasets: [{
 				data: Object.values(res['gpu']),
@@ -75,9 +138,40 @@ function summary_render() {
 			type: 'pie',
 			data: data2,
 			options: {
+				title: {
+					display: true,
+					text: 'GPUs'
+				},
 				legend: {
 					display: false
 				}
+			}
+		});
+
+
+		/* GPU Mem Using */
+		ctx_gpu_mem.canvas.height = 200;
+		new Chart(ctx_gpu_mem, {
+			"type": "line",
+			"data": {
+				"labels": ["January", "February", "March", "April", "May", "June", "July"],
+				"datasets": [{
+					"label": "My First Data set",
+					"data": [2, 0.5, 1.5, 0.81, 1.56, 1.55, 1.40],
+					"fill": true,
+					"borderColor": "rgb(75, 192, 192)",
+					"lineTension": 0.1
+				}]
+			},
+			"options": {
+				title: {
+					display: true,
+					text: 'GPU MEM Using'
+				},
+				legend: {
+					display: false
+				},
+				maintainAspectRatio: false
 			}
 		});
 	});

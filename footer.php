@@ -5,7 +5,6 @@ require_once('config.inc.php');
 	<div class="footer">
 		<ul class="breadcrumb">
 			<li>&copy;2018&nbsp;<a href="<?= BASE_URL ?>/">YAO</a></li>
-			<li><a href="https://blog.newnius.com/" target="_blank">Newnius</a></li>
 			<li><a href="<?= BASE_URL ?>/help#TOS">TOS</a></li>
 			<li><a href="<?= BASE_URL ?>/help#privacy">Privacy</a></li>
 			<li><a href="<?= BASE_URL ?>/help#feedback">Feedback</a></li>

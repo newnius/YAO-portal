@@ -68,3 +68,34 @@ function oauth_get_url()
 	$res['url'] = $url;
 	return $res;
 }
+
+function user_login($user)
+{
+	/* mock */
+	$info = array('open_id' => 'admin', 'role' => 'normal', 'nickname' => 'Admin');
+	$open_id = ($info !== null && isset($info['open_id'])) ? $info['open_id'] : null;
+	$email = ($info !== null && isset($info['email'])) ? $info['email'] : null;
+	$role = ($info !== null && isset($info['role'])) ? $info['role'] : 'normal';
+	$nickname = ($info !== null && isset($info['nickname'])) ? $info['nickname'] : 'u2913';
+
+	$user = new CRObject();
+	$user->set('open_id', $open_id);
+	$user->set('email', $email);
+	$user->set('role', $role);
+	$res = user_get($user);
+
+	if ($res['errno'] === 0) {
+		$user = $res['user'];
+		Session::put('uid', $user['uid']);
+		Session::put('role', $user['role']);
+		Session::put('nickname', $nickname);
+
+		$log = new CRObject();
+		$log->set('scope', $user['uid']);
+		$log->set('tag', 'user.login');
+		$content = array('uid' => $user['uid'], 'response' => $res['errno']);
+		$log->set('content', json_encode($content));
+		CRLogger::log($log);
+	}
+	return $res;
+}

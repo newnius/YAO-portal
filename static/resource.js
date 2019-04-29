@@ -72,8 +72,8 @@ function resourceResponseHandler(res) {
 		$.each(res["resources"], function (i, node) {
 			var item = {
 				'host': node.host,
-				'CPU': '-',
-				'MEM': '-',
+				'CPU': node.cpu_num,
+				'MEM': node.mem_available + ' / ' + node.mem_total + ' (GB)',
 				'GPU': node.status.length,
 				'status': node.status
 			};

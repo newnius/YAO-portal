@@ -171,6 +171,28 @@ function summary_get()
 	return $res;
 }
 
+function summary_get_pool_history()
+{
+	if (!AccessController::hasAccess(Session::get('role', 'visitor'), 'system.summary')) {
+		$res['errno'] = Code::NO_PRIVILEGE;
+		return $res;
+	}
+
+	$spider = new Spider();
+	$spider->doGet(YAO_SCHEDULER_ADDR . '?action=pool_status_history');
+	$msg = json_decode($spider->getBody(), true);
+
+	if ($msg['code'] !== 0) {
+		$res['errno'] = $msg['code'] !== null ? $msg['code'] : Code::UNKNOWN_ERROR;
+		$res['msg'] = $msg['error'];
+		return $res;
+	}
+
+	$res['data'] = $msg['data'];
+	$res['errno'] = Code::SUCCESS;
+	return $res;
+}
+
 function task_logs(CRObject $job)
 {
 	if (!AccessController::hasAccess(Session::get('role', 'visitor'), 'job.list')) {

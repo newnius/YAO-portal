@@ -21,32 +21,6 @@ function summary_render() {
 			$("#modal-msg").modal('show');
 		}
 
-		/* CPU Load */
-		ctx_cpu.canvas.height = 200;
-		new Chart(ctx_cpu, {
-			"type": "line",
-			"data": {
-				"labels": ["January", "February", "March", "April", "May", "June", "July"],
-				"datasets": [{
-					"label": "My First Data set",
-					"data": [2, 0.5, 1.5, 0.81, 1.56, 1.55, 1.40],
-					"fill": true,
-					"borderColor": "rgb(75, 192, 192)",
-					"lineTension": 0.1
-				}]
-			},
-			"options": {
-				title: {
-					display: true,
-					text: 'GPU Load'
-				},
-				legend: {
-					display: false
-				},
-				maintainAspectRatio: false
-			}
-		});
-
 
 		/* Jobs */
 		var data = {
@@ -69,58 +43,6 @@ function summary_render() {
 				legend: {
 					display: false
 				}
-			}
-		});
-
-		/* Mem Using */
-		ctx_mem.canvas.height = 200;
-		new Chart(ctx_mem, {
-			"type": "line",
-			"data": {
-				"labels": ["January", "February", "March", "April", "May", "June", "July"],
-				"datasets": [{
-					"label": "My First Data set",
-					"data": [2, 0.5, 1.5, 0.81, 1.56, 1.55, 1.40],
-					"fill": true,
-					"borderColor": "rgb(75, 192, 192)",
-					"lineTension": 0.1
-				}]
-			},
-			"options": {
-				title: {
-					display: true,
-					text: 'MEM Using'
-				},
-				legend: {
-					display: false
-				},
-				maintainAspectRatio: false
-			}
-		});
-
-		/* GPU Util */
-		ctx_gpu_util.canvas.height = 200;
-		new Chart(ctx_gpu_util, {
-			"type": "line",
-			"data": {
-				"labels": ["January", "February", "March", "April", "May", "June", "July"],
-				"datasets": [{
-					"label": "My First Data set",
-					"data": [2, 0.5, 1.5, 0.81, 1.56, 1.55, 1.40],
-					"fill": true,
-					"borderColor": "rgb(75, 192, 192)",
-					"lineTension": 0.1
-				}]
-			},
-			"options": {
-				title: {
-					display: true,
-					text: 'GPU Utilization'
-				},
-				legend: {
-					display: false
-				},
-				maintainAspectRatio: false
 			}
 		});
 
@@ -148,16 +70,138 @@ function summary_render() {
 			}
 		});
 
+	});
+	ajax.fail(function (jqXHR, textStatus) {
+		$("#modal-msg-content").html("Request failed : " + jqXHR.statusText);
+		$("#modal-msg").modal('show');
+	});
+
+
+	var ajax_pool = $.ajax({
+		url: window.config.BASE_URL + "/service?action=summary_get_pool_history",
+		type: 'GET',
+		data: {}
+	});
+	ajax_pool.done(function (res) {
+		if (res["errno"] !== 0) {
+			$("#modal-msg-content").html(res["msg"]);
+			$("#modal-msg").modal('show');
+		}
+
+		var cpu_util = [];
+		var cpu_total = [];
+		var mem_available = [];
+		var mem_total = [];
+		var mem_using = [];
+		var gpu_util = [];
+		var gpu_total = [];
+		var gpu_mem_available = [];
+		var gpu_mem_total = [];
+		var gpu_mem_using = [];
+		var timestamps = [];
+		$.each(res["data"], function (i, item) {
+			cpu_util.push(item['cpu_util'].toFixed(2));
+			cpu_total.push(item['cpu_total']);
+			mem_available.push(item['mem_available']);
+			mem_total.push(item['mem_total']);
+			mem_using.push(item['mem_total'] - item['mem_available']);
+			gpu_util.push(item['gpu_util']);
+			gpu_total.push(item['gpu_total']);
+			gpu_mem_available.push(item['gpu_mem_available']);
+			gpu_mem_total.push(item['gpu_mem_total']);
+			gpu_mem_using.push(item['gpu_mem_total'] - item['gpu_mem_available']);
+			timestamps.push(item['ts']);
+		});
+
+		/* CPU Load */
+		ctx_cpu.canvas.height = 200;
+		new Chart(ctx_cpu, {
+			"type": "line",
+			"data": {
+				"labels": timestamps,
+				"datasets": [{
+					"label": "My First Data set",
+					"data": cpu_util,
+					"fill": true,
+					"borderColor": "rgb(75, 192, 192)",
+					"lineTension": 0.1
+				}]
+			},
+			"options": {
+				title: {
+					display: true,
+					text: 'CPU Load'
+				},
+				legend: {
+					display: false
+				},
+				maintainAspectRatio: false
+			}
+		});
+
+
+		/* Mem Using */
+		ctx_mem.canvas.height = 200;
+		new Chart(ctx_mem, {
+			"type": "line",
+			"data": {
+				"labels": timestamps,
+				"datasets": [{
+					"label": "My First Data set",
+					"data": mem_using,
+					"fill": true,
+					"borderColor": "rgb(75, 192, 192)",
+					"lineTension": 0.1
+				}]
+			},
+			"options": {
+				title: {
+					display: true,
+					text: 'MEM Using'
+				},
+				legend: {
+					display: false
+				},
+				maintainAspectRatio: false
+			}
+		});
+
+		/* GPU Util */
+		ctx_gpu_util.canvas.height = 200;
+		new Chart(ctx_gpu_util, {
+			"type": "line",
+			"data": {
+				"labels": timestamps,
+				"datasets": [{
+					"label": "My First Data set",
+					"data": gpu_util,
+					"fill": true,
+					"borderColor": "rgb(75, 192, 192)",
+					"lineTension": 0.1
+				}]
+			},
+			"options": {
+				title: {
+					display: true,
+					text: 'GPU Utilization'
+				},
+				legend: {
+					display: false
+				},
+				maintainAspectRatio: false
+			}
+		});
+
 
 		/* GPU Mem Using */
 		ctx_gpu_mem.canvas.height = 200;
 		new Chart(ctx_gpu_mem, {
 			"type": "line",
 			"data": {
-				"labels": ["January", "February", "March", "April", "May", "June", "July"],
+				"labels": timestamps,
 				"datasets": [{
 					"label": "My First Data set",
-					"data": [2, 0.5, 1.5, 0.81, 1.56, 1.55, 1.40],
+					"data": gpu_mem_using,
 					"fill": true,
 					"borderColor": "rgb(75, 192, 192)",
 					"lineTension": 0.1
@@ -175,7 +219,7 @@ function summary_render() {
 			}
 		});
 	});
-	ajax.fail(function (jqXHR, textStatus) {
+	ajax_pool.fail(function (jqXHR, textStatus) {
 		$("#modal-msg-content").html("Request failed : " + jqXHR.statusText);
 		$("#modal-msg").modal('show');
 	});

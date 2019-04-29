@@ -99,6 +99,10 @@ switch ($action) {
 		$res = summary_get();
 		break;
 
+	case 'summary_get_pool_history':
+		$res = summary_get_pool_history();
+		break;
+
 	case 'task_logs':
 		$task = new CRObject();
 		$task->set('job', cr_get_GET('job'));

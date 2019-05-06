@@ -16,7 +16,6 @@ require_once('config.inc.php');
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/eonasdan-bootstrap-datetimepicker@4.17.47/src/js/bootstrap-datetimepicker.min.js"></script>
 
-<script src="static/config.js"></script>
 <script src="static/util.js"></script>
 <script src="static/script.js"></script>
 <script async src="https://cdn.newnius.com/ana/ea.js"></script>

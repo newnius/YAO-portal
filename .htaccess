@@ -5,3 +5,5 @@ RewriteRule ^auth$ /auth.php
 RewriteRule ^help$ /help.php
 RewriteRule ^ucenter$ /ucenter.php
 
+ErrorDocument 404 /404.php
+

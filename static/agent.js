@@ -16,7 +16,7 @@ function register_events_agent() {
 			return;
 
 		var ajax = $.ajax({
-			url: window.config.BASE_URL + "/service?action=agent_add",
+			url: "service?action=agent_add",
 			type: 'POST',
 			data: {
 				ip: ip,
@@ -42,7 +42,7 @@ function register_events_agent() {
 
 function load_agents(cluster) {
 	$("#table-agent").bootstrapTable({
-		url: window.config.BASE_URL + '/service?action=agent_list&who=' + cluster,
+		url: 'service?action=agent_list&who=' + cluster,
 		responseHandler: agentResponseHandler,
 		sidePagination: 'server',
 		cache: true,
@@ -123,7 +123,7 @@ window.agentOperateEvents = {
 			return;
 		}
 		var ajax = $.ajax({
-			url: window.config.BASE_URL + "/service?action=agent_remove",
+			url: "service?action=agent_remove",
 			type: 'POST',
 			data: {id: row.id}
 		});

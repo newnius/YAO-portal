@@ -2,13 +2,20 @@ function register_events_job() {
 	$('#btn-job-add').click(function (e) {
 		cb = function (workspaces) {
 			$('#form-job-workspace').children().remove();
+
+			var newGroupOption = '<option value="" selected>None</option>';
+			$('#form-job-workspace').append(newGroupOption);
+
 			$.each(workspaces, function (i, workspace) {
 				var newGroupOption = '<option value="' + workspace.git_repo + '">' + workspace.name + '</option>';
 				$('#form-job-workspace').append(newGroupOption);
 			});
-
 		};
 		wordspace_gets(null, cb);
+
+		$('#form-job-name').val('');
+		$('#form-job-priority').val(25);
+		$('#form-job-cluster').val(1);
 		$('#modal-job').modal('show');
 	});
 
@@ -38,15 +45,17 @@ function register_events_job() {
 		if (name.length === 0) {
 			return true;
 		}
-		if (workspace.length === 0) {
-			return true;
-		}
+		$.each(tasks, function (i, task) {
+			if (task['name'].length === 0) {
+				return true;
+			}
+		});
 
 
 		$('#modal-job').modal('hide');
 
 		var ajax = $.ajax({
-			url: window.config.BASE_URL + "/service?action=job_submit",
+			url: "service?action=job_submit",
 			type: 'POST',
 			data: {
 				name: name,
@@ -76,7 +85,7 @@ function register_events_job() {
 
 function load_jobs(scope) {
 	$("#table-job").bootstrapTable({
-		url: window.config.BASE_URL + '/service?action=job_list&who=' + scope,
+		url: 'service?action=job_list&who=' + scope,
 		responseHandler: jobResponseHandler,
 		sidePagination: 'server',
 		cache: true,
@@ -242,7 +251,7 @@ window.jobOperateEvents = {
 			return;
 		}
 		var ajax = $.ajax({
-			url: window.config.BASE_URL + "/service?action=job_stop",
+			url: "service?action=job_stop",
 			type: 'POST',
 			data: {id: row.name}
 		});
@@ -263,7 +272,7 @@ window.jobOperateEvents = {
 
 function load_job_status(name) {
 	$("#table-task").bootstrapTable({
-		url: window.config.BASE_URL + '/service?action=job_status&name=' + name,
+		url: 'service?action=job_status&name=' + name,
 		responseHandler: jobStatusResponseHandler,
 		sidePagination: 'server',
 		cache: true,
@@ -361,7 +370,7 @@ window.jobStatusOperateEvents = {
 		var task = row.id;
 
 		var ajax = $.ajax({
-			url: window.config.BASE_URL + "/service?action=task_logs",
+			url: "service?action=task_logs",
 			type: 'GET',
 			data: {
 				job: job,

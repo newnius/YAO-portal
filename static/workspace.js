@@ -20,7 +20,7 @@ function register_events_workspace() {
 			action = 'workspace_update';
 
 		var ajax = $.ajax({
-			url: window.config.BASE_URL + "/service?action=" + action,
+			url: "service?action=" + action,
 			type: 'POST',
 			data: {
 				id: id,
@@ -48,7 +48,7 @@ function register_events_workspace() {
 
 function load_workspaces(cluster) {
 	$("#table-workspace").bootstrapTable({
-		url: window.config.BASE_URL + '/service?action=workspace_list&who=' + cluster,
+		url: 'service?action=workspace_list&who=' + cluster,
 		responseHandler: workspaceResponseHandler,
 		sidePagination: 'server',
 		cache: true,
@@ -125,7 +125,7 @@ function workspaceOperateFormatter(value, row, index) {
 
 function wordspace_gets(cluster, cb) {
 	var ajax = $.ajax({
-		url: window.config.BASE_URL + '/service?action=workspace_list&who=' + cluster,
+		url: 'service?action=workspace_list&who=' + cluster,
 		type: 'GET',
 		data: {}
 	});
@@ -167,7 +167,7 @@ window.workspaceOperateEvents = {
 			return;
 		}
 		var ajax = $.ajax({
-			url: window.config.BASE_URL + "/service?action=workspace_remove",
+			url: "service?action=workspace_remove",
 			type: 'POST',
 			data: {id: row.id}
 		});

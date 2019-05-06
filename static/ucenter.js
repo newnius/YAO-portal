@@ -38,7 +38,7 @@ $(function () {
 
 function load_logs(scope) {
 	$("#table-log").bootstrapTable({
-		url: window.config.BASE_URL + '/service?action=log_gets&who=' + scope,
+		url: 'service?action=log_gets&who=' + scope,
 		responseHandler: logResponseHandler,
 		sidePagination: 'server',
 		cache: true,

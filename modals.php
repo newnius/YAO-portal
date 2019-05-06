@@ -85,7 +85,9 @@
 					<label>Workspace</label>
 					<div class="form-group form-group-lg">
 						<label for="form-job-workspace" class="sr-only">Workspace</label>
-						<select id="form-job-workspace" class="form-control"></select>
+						<select id="form-job-workspace" class="form-control">
+							<option value="">None</option>
+						</select>
 					</div>
 					<label>Virtual Cluster</label>
 					<div class="form-group form-group-lg">

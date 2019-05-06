@@ -11,7 +11,7 @@ function summary_render() {
 	var ctx_gpu_mem = document.getElementById('summary-chart-gpu-mem').getContext('2d');
 
 	var ajax = $.ajax({
-		url: window.config.BASE_URL + "/service?action=summary_get",
+		url: "service?action=summary_get",
 		type: 'GET',
 		data: {}
 	});
@@ -28,8 +28,6 @@ function summary_render() {
 				data: Object.values(res['jobs']),
 				backgroundColor: ["rgb(54, 162, 235)", "rgb(255, 99, 132)", "rgb(255, 205, 86)"]
 			}],
-
-			// These labels appear in the legend and in the tooltips when hovering different arcs
 			labels: Object.keys(res['jobs'])
 		};
 		var myPieChart = new Chart(ctx_jobs, {
@@ -52,8 +50,6 @@ function summary_render() {
 				data: Object.values(res['gpu']),
 				backgroundColor: ["rgb(54, 162, 235)", "rgb(255, 99, 132)"]
 			}],
-
-			// These labels appear in the legend and in the tooltips when hovering different arcs
 			labels: Object.keys(res['gpu'])
 		};
 		var myPieChart2 = new Chart(ctx_gpu, {
@@ -78,7 +74,7 @@ function summary_render() {
 
 
 	var ajax_pool = $.ajax({
-		url: window.config.BASE_URL + "/service?action=summary_get_pool_history",
+		url: "service?action=summary_get_pool_history",
 		type: 'GET',
 		data: {}
 	});
@@ -120,7 +116,7 @@ function summary_render() {
 			"data": {
 				"labels": timestamps,
 				"datasets": [{
-					"label": "My First Data set",
+					"label": "CPU Load",
 					"data": cpu_util,
 					"fill": true,
 					"borderColor": "rgb(75, 192, 192)",
@@ -147,8 +143,14 @@ function summary_render() {
 			"data": {
 				"labels": timestamps,
 				"datasets": [{
-					"label": "My First Data set",
+					"label": "Using",
 					"data": mem_using,
+					"fill": true,
+					"borderColor": "rgb(75, 192, 192)",
+					"lineTension": 0.1
+				}, {
+					"label": "Total",
+					"data": mem_total,
 					"fill": true,
 					"borderColor": "rgb(75, 192, 192)",
 					"lineTension": 0.1
@@ -173,7 +175,7 @@ function summary_render() {
 			"data": {
 				"labels": timestamps,
 				"datasets": [{
-					"label": "My First Data set",
+					"label": "GPU Util",
 					"data": gpu_util,
 					"fill": true,
 					"borderColor": "rgb(75, 192, 192)",
@@ -200,8 +202,14 @@ function summary_render() {
 			"data": {
 				"labels": timestamps,
 				"datasets": [{
-					"label": "My First Data set",
+					"label": "Using",
 					"data": gpu_mem_using,
+					"fill": true,
+					"borderColor": "rgb(75, 192, 192)",
+					"lineTension": 0.1
+				}, {
+					"label": "Total",
+					"data": gpu_mem_total,
 					"fill": true,
 					"borderColor": "rgb(75, 192, 192)",
 					"lineTension": 0.1

@@ -2,7 +2,7 @@ $(function () {
 	$("#btn-signout").click(function (e) {
 		e.preventDefault();
 		var ajax = $.ajax({
-			url: window.config.BASE_URL + "/service?action=user_signout",
+			url: "service?action=user_signout",
 			type: 'POST',
 			data: {}
 		});
@@ -14,7 +14,7 @@ $(function () {
 	$("#btn-oauth-login").click(function (e) {
 		e.preventDefault();
 		var ajax = $.ajax({
-			url: window.config.BASE_URL + "/service?action=user_login",
+			url: "service?action=user_login",
 			type: 'POST',
 			data: {}
 		});

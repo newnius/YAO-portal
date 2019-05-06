@@ -4,7 +4,7 @@ function register_events_resource() {
 
 function load_resources() {
 	$("#table-resource").bootstrapTable({
-		url: window.config.BASE_URL + '/service?action=resource_list',
+		url: 'service?action=resource_list',
 		responseHandler: resourceResponseHandler,
 		sidePagination: 'server',
 		cache: true,

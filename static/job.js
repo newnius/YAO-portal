@@ -198,7 +198,7 @@ var statusFormatter = function (status) {
 	status = parseInt(status);
 	switch (status) {
 		case 0:
-			return '<span class="text-normal">Created</span>';
+			return '<span class="text-normal">Submitted</span>';
 		case 1:
 			return '<span class="text-normal">Starting</span>';
 		case 2:
@@ -337,7 +337,7 @@ function load_job_status(name) {
 			valign: 'middle'
 		}, {
 			field: 'operate',
-			title: 'Operate',
+			title: 'Logs',
 			align: 'center',
 			events: jobStatusOperateEvents,
 			formatter: jobStatusOperateFormatter
@@ -360,6 +360,7 @@ function jobStatusResponseHandler(res) {
 function jobStatusOperateFormatter(value, row, index) {
 	var div = '<div class="btn-group" role="group" aria-label="...">';
 	div += '<button class="btn btn-default logs"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;</button>';
+	div += '<button class="btn btn-default download"><i class="glyphicon glyphicon-download-alt"></i>&nbsp;</button>';
 	div += '</div>';
 	return div;
 }
@@ -384,6 +385,31 @@ window.jobStatusOperateEvents = {
 			}
 			$('#modal-task-logs-content').text(res['logs']);
 			$('#modal-task-logs').modal('show');
+		});
+		ajax.fail(function (jqXHR, textStatus) {
+			$("#modal-msg-content").html("Request failed : " + jqXHR.statusText);
+			$("#modal-msg").modal('show');
+			$('#table-job').bootstrapTable("refresh");
+		});
+	},
+	'click .download': function (e, value, row, index) {
+		var job = getParameterByName('name');
+		var task = row.id;
+
+		var ajax = $.ajax({
+			url: "service?action=task_logs",
+			type: 'GET',
+			data: {
+				job: job,
+				task: task
+			}
+		});
+		ajax.done(function (res) {
+			if (res["errno"] !== 0) {
+				$("#modal-msg-content").html(res["msg"]);
+				$("#modal-msg").modal('show');
+			}
+			download(res['msg'], job + '_' + task + '.txt', "text/plain");
 		});
 		ajax.fail(function (jqXHR, textStatus) {
 			$("#modal-msg-content").html("Request failed : " + jqXHR.statusText);

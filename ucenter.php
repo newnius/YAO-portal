@@ -260,6 +260,7 @@ foreach ($entries as $entry) {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.12.1/dist/extensions/export/bootstrap-table-export.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.10.1/tableExport.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/downloadjs@1.4.7/download.min.js"></script>
 
 <script src="static/workspace.js"></script>
 <script src="static/job.js"></script>

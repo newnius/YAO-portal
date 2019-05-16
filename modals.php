@@ -160,14 +160,14 @@
 								</div>
 							</div>
 							<div class="col-md-2">
-								<label>GPU Number</label>
+								<label>GPU Number (Available: 4)</label>
 								<div class="form-group">
 									<input type="number" class="form-control task-gpu-num" step="1" min="1" value="1"
 									       placeholder="number of GPU cards required" required/>
 								</div>
 							</div>
 							<div class="col-md-2">
-								<label>GPU Memory</label>
+								<label>GPU Memory(Left:N GB)</label>
 								<div class="form-group">
 									<input type="number" class="form-control task-gpu-mem" step="1024" min="1024"
 									       value="4096" placeholder="MB" required/>

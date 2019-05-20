@@ -106,9 +106,7 @@ function summary_render() {
 			gpu_mem_available.push(item['gpu_mem_available']);
 			gpu_mem_total.push(item['gpu_mem_total']);
 			gpu_mem_using.push(item['gpu_mem_total'] - item['gpu_mem_available']);
-			timestamps.push(item['ts']);
-
-			console.log(moment(item['ts']).format('HH:mm:ss'));
+			timestamps.push(moment(item['ts']).format('HH:mm:ss'));
 		});
 
 		/* CPU Load */

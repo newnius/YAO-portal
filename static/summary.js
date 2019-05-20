@@ -107,6 +107,8 @@ function summary_render() {
 			gpu_mem_total.push(item['gpu_mem_total']);
 			gpu_mem_using.push(item['gpu_mem_total'] - item['gpu_mem_available']);
 			timestamps.push(item['ts']);
+
+			console.log(moment(item['ts'],'mm/dd/yyyy'));
 		});
 
 		/* CPU Load */
@@ -162,7 +164,7 @@ function summary_render() {
 					text: 'MEM Using'
 				},
 				legend: {
-					display: true
+					display: false
 				},
 				maintainAspectRatio: false
 			}

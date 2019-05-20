@@ -246,7 +246,7 @@
 					<div class="form-group form-group-lg">
 						<label for="form-agent-ip" class="sr-only">IP</label>
 						<input type="text" id="form-workspace-name" class="form-control" maxlength="64"
-						       placeholder="" required/>
+						       placeholder="workspace name" required/>
 					</div>
 					<label>Type</label>
 					<div class="form-group form-group-lg">
@@ -255,7 +255,7 @@
 							<option value="git">git</option>
 						</select>
 					</div>
-					<label>Repo</label>
+					<label>Git Repo</label>
 					<div class="form-group form-group-lg">
 						<label for="form-workspace-git-repo" class="sr-only">Git Repo</label>
 						<input type="text" id="form-workspace-git-repo" class="form-control"
@@ -265,7 +265,7 @@
 						<input type="hidden" id="form-workspace-submit-type"/>
 						<input type="hidden" id="form-workspace-id"/>
 						<input type="hidden" id="form-workspace-content"/>
-						<button id="form-workspace-submit" type="submit" class="btn btn-primary btn-lg">Submit</button>
+						<button id="form-workspace-submit" type="submit" class="btn btn-primary btn-lg">Create</button>
 					</div>
 				</form>
 			</div>

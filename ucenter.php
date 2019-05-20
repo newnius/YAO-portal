@@ -168,11 +168,7 @@ foreach ($entries as $entry) {
 							<div class="panel-heading">Job Status</div>
 							<div class="panel-body">
 								<div class="table-responsive">
-									<div id="toolbar">
-										<button id="btn-job-stop" class="btn btn-default">
-											<i class="glyphicon glyphicon-remove"></i> Stop
-										</button>
-									</div>
+									<div id="toolbar"></div>
 									<table id="table-task" data-toolbar="#toolbar" class="table table-striped">
 									</table>
 								</div>

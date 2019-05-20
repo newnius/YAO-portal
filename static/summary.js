@@ -162,7 +162,7 @@ function summary_render() {
 					text: 'MEM Using'
 				},
 				legend: {
-					display: false
+					display: true
 				},
 				maintainAspectRatio: false
 			}

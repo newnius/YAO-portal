@@ -409,7 +409,7 @@ window.jobStatusOperateEvents = {
 				$("#modal-msg-content").html(res["msg"]);
 				$("#modal-msg").modal('show');
 			}
-			download(res['msg'], job + '_' + task + '.txt', "text/plain");
+			download(res['logs'], job + '_' + task + '.txt', "text/plain");
 		});
 		ajax.fail(function (jqXHR, textStatus) {
 			$("#modal-msg-content").html("Request failed : " + jqXHR.statusText);

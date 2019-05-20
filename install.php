@@ -16,7 +16,6 @@ MysqlPDO::configure($config);
 
 create_table_user();
 create_table_workspace();
-create_table_cluster();
 create_table_agent();
 create_table_model();
 create_table_log();
@@ -65,25 +64,6 @@ function create_table_workspace()
                 `updated_at` BIGINT NOT NULL,
 				`git_repo` varchar(256),
 				`created_by` int NOT NULL,
-				`version` int NOT NULL DEFAULT 0 /* for upgrade purpose */
-			)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci',
-	);
-	execute_sqls($sqls);
-}
-
-function create_table_cluster()
-{
-	$sqls = array(
-//        'DROP `yao_cluster`' => 'DROP TABLE IF EXISTS `yao_cluster`',
-		'CREATE `yao_cluster`' =>
-			'CREATE TABLE `yao_cluster`(
-				`name` VARCHAR(64) NOT NULL,
-				 PRIMARY KEY(`name`),
-                `created_at` BIGINT NOT NULL,
-				`created_by` int NOT NULL,
-				`reserved_nodes` json NOT NULL,
-				`quota_per_day` int NOT NULL,
-				`quota_used` int NOT NULL,
 				`version` int NOT NULL DEFAULT 0 /* for upgrade purpose */
 			)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci',
 	);

@@ -19,6 +19,10 @@ $(function () {
 			register_events_job();
 			load_job_status(getParameterByName('name'));
 			break;
+		case "clusters":
+			register_events_cluster();
+			load_clusters();
+			break;
 		case "agents":
 			register_events_agent();
 			load_agents('');

@@ -160,14 +160,14 @@
 								</div>
 							</div>
 							<div class="col-md-2">
-								<label>GPU Number (Available: 4)</label>
+								<label>GPU Number</label>
 								<div class="form-group">
 									<input type="number" class="form-control task-gpu-num" step="1" min="1" value="1"
 									       placeholder="number of GPU cards required" required/>
 								</div>
 							</div>
 							<div class="col-md-2">
-								<label>GPU Memory(Left:N GB)</label>
+								<label>GPU Memory<abbr title="per card">?</abbr></label>
 								<div class="form-group">
 									<input type="number" class="form-control task-gpu-mem" step="1024" min="1024"
 									       value="4096" placeholder="MB" required/>
@@ -177,6 +177,58 @@
 					</div>
 					<div>
 						<button id="form-job-submit" type="submit" class="btn btn-primary btn-lg">Submit</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- virtual cluster modal -->
+<div class="modal fade" id="modal-cluster" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content panel-info">
+			<div class="modal-header panel-heading">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+				</button>
+				<h4 id="modal-cluster-title" class="modal-title">Create Virtual Cluster</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form" action="javascript:void(0)">
+					<label>Name</label>
+					<div class="form-group form-group-lg">
+						<label for="form-cluster-name" class="sr-only">Name</label>
+						<input type="text" id="form-cluster-name" class="form-control" maxlength="16"
+						       placeholder="virtual cluster name" required/>
+					</div>
+					<label>GPU Number</label>
+					<div class="form-group form-group-lg">
+						<label for="form-cluster-quota-gpu-number" class="sr-only">GPU number</label>
+						<input type="number" id="form-cluster-quota-gpu-number" class="form-control" min="0" step="1"
+						       placeholder=""/>
+					</div>
+					<label>GPU Memory (Total)</label>
+					<div class="form-group form-group-lg">
+						<label for="form-cluster-quota-gpu-memory" class="sr-only">GPU Memory</label>
+						<input type="number" id="form-cluster-quota-gpu-memory" class="form-control" min="0" step="1024"
+						       placeholder="(MB)"/>
+					</div>
+					<label>CPU</label>
+					<div class="form-group form-group-lg">
+						<label for="form-cluster-quota-cpu" class="sr-only">CPU</label>
+						<input type="number" id="form-cluster-quota-cpu" class="form-control" placeholder="" min="0"
+						       step="1"/>
+					</div>
+					<label>Memory (Total)</label>
+					<div class="form-group form-group-lg">
+						<label for="form-cluster-quota-mem" class="sr-only">CPU</label>
+						<input type="number" id="form-cluster-quota-mem" class="form-control" placeholder="(MB)" min="0"
+						       step="1024"/>
+					</div>
+					<div>
+						<input type="hidden" id="form-cluster-submit-type"/>
+						<button id="form-cluster-submit" type="submit" class="btn btn-primary btn-lg">Submit</button>
 					</div>
 				</form>
 			</div>

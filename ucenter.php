@@ -45,6 +45,9 @@ if (isset($_GET['logs'])) {
 } elseif (isset($_GET['agents'])) {
 	$page_type = 'agents';
 
+} elseif (isset($_GET['clusters'])) {
+	$page_type = 'clusters';
+
 } elseif (isset($_GET['workspaces'])) {
 	$page_type = 'workspaces';
 
@@ -204,6 +207,24 @@ foreach ($entries as $entry) {
 						</div>
 					</div>
 
+				<?php } elseif ($page_type === 'clusters') { ?>
+					<div id="clusters">
+						<div class="panel panel-default">
+							<div class="panel-heading">Virtual Clusters</div>
+							<div class="panel-body">
+								<div class="table-responsive">
+									<div id="toolbar">
+										<button id="btn-cluster-add" class="btn btn-primary">
+											<i class="glyphicon glyphicon-plus"></i> Create
+										</button>
+									</div>
+									<table id="table-cluster" data-toolbar="#toolbar" class="table table-striped">
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+
 				<?php } elseif ($page_type === 'agents') { ?>
 					<div id="agents">
 						<div class="panel panel-default">
@@ -260,6 +281,7 @@ foreach ($entries as $entry) {
 
 <script src="static/workspace.js"></script>
 <script src="static/job.js"></script>
+<script src="static/cluster.js"></script>
 <script src="static/agent.js"></script>
 <script src="static/resource.js"></script>
 <script src="static/summary.js"></script>

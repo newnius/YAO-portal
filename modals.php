@@ -106,6 +106,15 @@
 							<option value="1">Low</option>
 						</select>
 					</div>
+					<label>Locality</label>
+					<div class="form-group form-group-lg">
+						<label for="form-job-locality" class="sr-only">Locality</label>
+						<select id="form-job-locality" class="form-control">
+							<option value="1">Positive</option>
+							<option value="0" selected>Any</option>
+							<option value="-1">Negative</option>
+						</select>
+					</div>
 					<label class="hidden">Run Before</label>
 					<div class="form-group form-group-lg hidden">
 						<div class='input-group date date-picker'>
@@ -137,9 +146,8 @@
 									       placeholder="Command to bring up task"/>
 								</div>
 							</div>
-
-							<div class="col-md-4 hidden">
-								<label>Name</label>
+							<div class="col-md-2">
+								<label>Host Name</label>
 								<div class="form-group">
 									<input type="text" class="form-control task-name" maxlength="32"
 									       placeholder="Task Name & Node Name" value="node1" required/>
@@ -158,6 +166,14 @@
 									<input type="number" class="form-control task-mem" step="1024" min="1024"
 									       value="4096" placeholder="MB" required/>
 								</div>
+							</div>
+							<div class="col-md-2">
+								<label>GPU Model<abbr title="best GPU model needed">?</abbr></label>
+								<select class="form-control form-control task-gpu-model" required>
+									<option value="k40">K40</option>
+									<option value="k80" selected>K80</option>
+									<option value="P100">P100</option>
+								</select>
 							</div>
 							<div class="col-md-2">
 								<label>GPU Number</label>

@@ -107,7 +107,6 @@ switch ($action) {
 		$task = new CRObject();
 		$task->set('job', cr_get_GET('job'));
 		$task->set('task', cr_get_GET('task'));
-		$task->set('task', 'node1');
 		$res = task_logs($task);
 		break;
 

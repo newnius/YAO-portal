@@ -229,7 +229,7 @@ function jobOperateFormatter(value, row, index) {
 		div += '<button class="btn btn-default config"><i class="glyphicon glyphicon-cog"></i>&nbsp;</button>';
 	if (page_type === 'jobs')
 		div += '<button class="btn btn-default stats"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;</button>';
-	if (page_type === 'jobs' && (parseInt(row.status) === 0 || parseInt(row.status) === 1))
+	if (page_type === 'jobs' && (parseInt(row.status) !== 3 && parseInt(row.status) !== 4))
 		div += '<button class="btn btn-default stop"><i class="glyphicon glyphicon-remove"></i>&nbsp;</button>';
 	div += '</div>';
 	return div;
@@ -296,7 +296,8 @@ function load_job_status(name) {
 			field: 'id',
 			title: 'ID',
 			align: 'center',
-			valign: 'middle'
+			valign: 'middle',
+			visible: false
 		}, {
 			field: 'image',
 			title: 'Image',

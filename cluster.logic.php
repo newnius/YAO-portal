@@ -20,6 +20,12 @@ function cluster_add(CRObject $cluster)
 	}
 
 	$spider = new Spider();
+	$cluster->set('weight', $cluster->getInt('weight', 0));
+	$cluster->set('reserved', $cluster->getBool('reserved', false));
+	$cluster->set('quota_cpu', $cluster->getInt('quota_cpu', 0));
+	$cluster->set('quota_mem', $cluster->getInt('quota_mem', 0));
+	$cluster->set('quota_gpu', $cluster->getInt('quota_gpu', 0));
+	$cluster->set('quota_gpu_mem', $cluster->getInt('quota_gpu_mem', 0));
 	$data['group'] = json_encode($cluster);
 	$spider->doPost(YAO_SCHEDULER_ADDR . '?action=group_add', $data);
 	$msg = json_decode($spider->getBody(), true);
@@ -76,6 +82,12 @@ function cluster_update(CRObject $cluster)
 	//TODO: check owner
 
 	$spider = new Spider();
+	$cluster->set('weight', $cluster->getInt('weight', 0));
+	$cluster->set('reserved', $cluster->getBool('reserved', false));
+	$cluster->set('quota_cpu', $cluster->getInt('quota_cpu', 0));
+	$cluster->set('quota_mem', $cluster->getInt('quota_mem', 0));
+	$cluster->set('quota_gpu', $cluster->getInt('quota_gpu', 0));
+	$cluster->set('quota_gpu_mem', $cluster->getInt('quota_gpu_mem', 0));
 	$data['group'] = json_encode($cluster);
 	$spider->doPost(YAO_SCHEDULER_ADDR . '?action=group_update', $data);
 	$msg = json_decode($spider->getBody(), true);

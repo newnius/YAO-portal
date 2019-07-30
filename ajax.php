@@ -165,6 +165,44 @@ switch ($action) {
 		$res = workspace_remove($workspace);
 		break;
 
+	case 'cluster_list':
+		$rule = new CRObject();
+		$rule->set('offset', cr_get_GET('offset'));
+		$rule->set('limit', cr_get_GET('limit'));
+		$rule->set('order', 'latest');
+		$res = cluster_list($rule);
+		break;
+
+	case 'cluster_add':
+		$cluster = new CRObject();
+		$cluster->set('name', cr_get_POST('name'));
+		$cluster->set('weight', cr_get_POST('weight'));
+		$cluster->set('reserved', cr_get_POST('reserved'));
+		$cluster->set('quota_cpu', cr_get_POST('quota_cpu'));
+		$cluster->set('quota_mem', cr_get_POST('quota_mem'));
+		$cluster->set('quota_gpu', cr_get_POST('quota_gpu'));
+		$cluster->set('quota_gpu_mem', cr_get_POST('quota_gpu_mem'));
+		$res = cluster_add($cluster);
+		break;
+
+	case 'cluster_update':
+		$cluster = new CRObject();
+		$cluster->set('name', cr_get_POST('name'));
+		$cluster->set('weight', cr_get_POST('weight'));
+		$cluster->set('reserved', cr_get_POST('reserved'));
+		$cluster->set('quota_cpu', cr_get_POST('quota_cpu'));
+		$cluster->set('quota_mem', cr_get_POST('quota_mem'));
+		$cluster->set('quota_gpu', cr_get_POST('quota_gpu'));
+		$cluster->set('quota_gpu_mem', cr_get_POST('quota_gpu_mem'));
+		$res = cluster_update($cluster);
+		break;
+
+	case 'cluster_remove':
+		$cluster = new CRObject();
+		$cluster->set('name', cr_get_POST('name'));
+		$res = cluster_remove($cluster);
+		break;
+
 	case 'user_signout':
 		$res = user_signout();
 		break;

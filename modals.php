@@ -218,29 +218,40 @@
 						<input type="text" id="form-cluster-name" class="form-control" maxlength="16"
 						       placeholder="virtual cluster name" required/>
 					</div>
+					<label>Weight</label>
+					<div class="form-group form-group-lg">
+						<label for="form-cluster-weight" class="sr-only">Weight</label>
+						<input type="number" id="form-cluster-weight" class="form-control" min="0" step="1"
+						       value="10" placeholder=""/>
+					</div>
+					<label>Reserved</label>
+					<div class="form-group form-group-lg">
+						<label for="form-cluster-reserved" class="sr-only">Reserved</label>
+						<input type="checkbox" id="form-cluster-reserved"/>&nbsp;&nbsp;Reserved?
+					</div>
 					<label>GPU Number</label>
 					<div class="form-group form-group-lg">
 						<label for="form-cluster-quota-gpu-number" class="sr-only">GPU number</label>
 						<input type="number" id="form-cluster-quota-gpu-number" class="form-control" min="0" step="1"
-						       placeholder=""/>
+						       value="0" placeholder=""/>
 					</div>
-					<label>GPU Memory (Total)</label>
+					<label>GPU Memory (Each)</label>
 					<div class="form-group form-group-lg">
 						<label for="form-cluster-quota-gpu-memory" class="sr-only">GPU Memory</label>
 						<input type="number" id="form-cluster-quota-gpu-memory" class="form-control" min="0" step="1024"
-						       placeholder="(MB)"/>
+						       value="10240" placeholder="(MB)"/>
 					</div>
 					<label>CPU</label>
 					<div class="form-group form-group-lg">
 						<label for="form-cluster-quota-cpu" class="sr-only">CPU</label>
 						<input type="number" id="form-cluster-quota-cpu" class="form-control" placeholder="" min="0"
-						       step="1"/>
+						       value="0" step="1"/>
 					</div>
 					<label>Memory (Total)</label>
 					<div class="form-group form-group-lg">
 						<label for="form-cluster-quota-mem" class="sr-only">CPU</label>
 						<input type="number" id="form-cluster-quota-mem" class="form-control" placeholder="(MB)" min="0"
-						       step="1024"/>
+						       value="1024" step="1024"/>
 					</div>
 					<div>
 						<input type="hidden" id="form-cluster-submit-type"/>

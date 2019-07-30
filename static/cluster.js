@@ -6,12 +6,14 @@ function register_events_cluster() {
 
 	$("#form-cluster-submit").click(function (e) {
 		var name = $('#form-cluster-name').val();
+		var weight = $('#form-cluster-weight').val();
+		var reserved = $('#form-cluster-reserved').prop("checked");
 		var quota_gpu = $('#form-cluster-quota-gpu-number').val();
 		var quota_gpu_mem = $('#form-cluster-quota-gpu-memory').val();
 		var quota_cpu = $('#form-cluster-quota-cpu').val();
 		var quota_mem = $('#form-cluster-quota-mem').val();
 
-		/* TODO validate form */
+		/* TODO: validate form */
 
 		$('#modal-cluster').modal('hide');
 		if ($('#form-cluster-submit-type').val() !== 'add')
@@ -22,6 +24,8 @@ function register_events_cluster() {
 			type: 'POST',
 			data: {
 				name: name,
+				weight: weight,
+				reserved: reserved,
 				quota_gpu: quota_gpu,
 				quota_gpu_mem: quota_gpu_mem,
 				quota_cpu: quota_cpu,

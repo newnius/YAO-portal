@@ -10,6 +10,7 @@ require_once('user.logic.php');
 require_once('job.logic.php');
 require_once('agent.logic.php');
 require_once('workspace.logic.php');
+require_once('cluster.logic.php');
 
 require_once('config.inc.php');
 require_once('init.inc.php');

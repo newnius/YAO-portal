@@ -86,6 +86,12 @@ function init_accessMap()
 		'workspace.update' => array('root', 'admin', 'normal'),
 		'workspace.remove' => array('root', 'admin', 'normal'),
 
+		/* cluster */
+		'cluster.list' => array('root', 'admin', 'normal'),
+		'cluster.add' => array('root', 'admin'),
+		'cluster.update' => array('root', 'admin'),
+		'cluster.remove' => array('root', 'admin'),
+
 		/* ucenter entry show control */
 		'ucenter.home' => array('root', 'admin', 'developer', 'normal'),
 		'ucenter.jobs' => array('root', 'admin', 'developer', 'normal'),

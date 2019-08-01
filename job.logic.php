@@ -35,7 +35,7 @@ function job_submit(CRObject $job)
 	}
 	$job->set('tasks', $tasks);
 	$job->set('workspace', $job->get('workspace'));
-	$job->set('virtual_cluster', $job->getInt('virtual_cluster'));
+	$job->set('group', $job->get('virtual_cluster'));
 	$job->set('priority', $job->getInt('priority'));
 	$job->set('run_before', $job->getInt('run_before'));
 	$job->set('created_by', $job->getInt('created_by'));

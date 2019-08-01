@@ -136,10 +136,10 @@ window.clusterOperateEvents = {
 		$('#form-cluster-name').attr('disabled', 'disabled');
 		$('#form-cluster-weight').val(row.weight);
 		$('#form-cluster-reserved').prop('checked', row.reserved === true);
-		$('#form-cluster-quota_gpu').val(row.quota_gpu);
-		$('#form-cluster-quota_gpu_mem').val(row.quota_gpu_mem);
-		$('#form-cluster-quota_cpu').val(row.quota_cpu);
-		$('#form-cluster-quota_mem').val(row.quota_mem);
+		$('#form-cluster-quota-gpu-number').val(row.quota_gpu);
+		$('#form-cluster-quota-gpu-memory').val(row.quota_gpu_mem);
+		$('#form-cluster-quota-cpu').val(row.quota_cpu);
+		$('#form-cluster-quota-mem').val(row.quota_mem);
 		$('#modal-cluster').modal('show');
 	},
 	'click .remove': function (e, value, row, index) {

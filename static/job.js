@@ -131,7 +131,7 @@ function load_jobs(scope) {
 			visible: false,
 			formatter: workspaceFormatter
 		}, {
-			field: 'virtual_cluster',
+			field: 'group',
 			title: 'Virtual Cluster',
 			align: 'center',
 			valign: 'middle',

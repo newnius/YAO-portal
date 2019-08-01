@@ -2,6 +2,9 @@ function register_events_cluster() {
 	$('#btn-cluster-add').click(function (e) {
 		$('#form-cluster-submit-type').val('add');
 		$('#form-cluster-name').removeAttr('disabled');
+		$('#form-cluster-name').val('');
+		$('#form-cluster-weight').val(10);
+		$('#form-cluster-reserved').prop('checked', false);
 		$('#modal-cluster').modal('show');
 	});
 
@@ -75,6 +78,16 @@ function load_clusters() {
 		columns: [{
 			field: 'name',
 			title: 'Name',
+			align: 'center',
+			valign: 'middle'
+		}, {
+			field: 'reserved',
+			title: 'Reserved',
+			align: 'center',
+			valign: 'middle'
+		}, {
+			field: 'weight',
+			title: 'Weight',
 			align: 'center',
 			valign: 'middle'
 		}, {

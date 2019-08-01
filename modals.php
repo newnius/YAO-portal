@@ -218,16 +218,16 @@
 						<input type="text" id="form-cluster-name" class="form-control" maxlength="16"
 						       placeholder="virtual cluster name" required/>
 					</div>
+					<label>Reserved</label>
+					<div class="form-group form-group-lg">
+						<label for="form-cluster-reserved" class="sr-only">Reserved</label>
+						<input type="checkbox" id="form-cluster-reserved"/>&nbsp;&nbsp;Reserved?
+					</div>
 					<label>Weight</label>
 					<div class="form-group form-group-lg">
 						<label for="form-cluster-weight" class="sr-only">Weight</label>
 						<input type="number" id="form-cluster-weight" class="form-control" min="0" step="1"
 						       value="10" placeholder=""/>
-					</div>
-					<label>Reserved</label>
-					<div class="form-group form-group-lg">
-						<label for="form-cluster-reserved" class="sr-only">Reserved</label>
-						<input type="checkbox" id="form-cluster-reserved"/>&nbsp;&nbsp;Reserved?
 					</div>
 					<label>GPU Number</label>
 					<div class="form-group form-group-lg">

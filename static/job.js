@@ -374,7 +374,7 @@ function jobStatusOperateFormatter(value, row, index) {
 window.jobStatusOperateEvents = {
 	'click .logs': function (e, value, row, index) {
 		var job = getParameterByName('name');
-		var task = row.id;
+		var task = row.hostname;
 
 		var ajax = $.ajax({
 			url: "service?action=task_logs",

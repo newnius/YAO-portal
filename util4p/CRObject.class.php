@@ -37,7 +37,7 @@ class CRObject implements JsonSerializable
 	public function getBool($key, $default = false)
 	{
 		if (isset($this->map[$key]) && !is_null($this->map[$key])) {
-			return $this->map[$key] === true;
+			return $this->map[$key] === true || $this->map[$key] === 'true';
 		}
 		return $default === true;
 	}
@@ -64,6 +64,6 @@ class CRObject implements JsonSerializable
 	public function jsonSerialize()
 	{
 		return $this->toArray();
-    }
+	}
 
 }

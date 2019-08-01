@@ -1,13 +1,14 @@
 function register_events_cluster() {
 	$('#btn-cluster-add').click(function (e) {
 		$('#form-cluster-submit-type').val('add');
+		$('#form-cluster-name').removeAttr('disabled');
 		$('#modal-cluster').modal('show');
 	});
 
 	$("#form-cluster-submit").click(function (e) {
 		var name = $('#form-cluster-name').val();
 		var weight = $('#form-cluster-weight').val();
-		var reserved = $('#form-cluster-reserved').prop("checked");
+		var reserved = $('#form-cluster-reserved').prop('checked');
 		var quota_gpu = $('#form-cluster-quota-gpu-number').val();
 		var quota_gpu_mem = $('#form-cluster-quota-gpu-memory').val();
 		var quota_cpu = $('#form-cluster-quota-cpu').val();
@@ -16,11 +17,12 @@ function register_events_cluster() {
 		/* TODO: validate form */
 
 		$('#modal-cluster').modal('hide');
+		var action = 'cluster_add';
 		if ($('#form-cluster-submit-type').val() !== 'add')
-			return;
+			action = 'cluster_update';
 
 		var ajax = $.ajax({
-			url: "service?action=cluster_add",
+			url: 'service?action=' + action,
 			type: 'POST',
 			data: {
 				name: name,
@@ -33,23 +35,23 @@ function register_events_cluster() {
 			}
 		});
 		ajax.done(function (res) {
-			if (res["errno"] !== 0) {
-				$("#modal-msg-content").html(res["msg"]);
-				$("#modal-msg").modal('show');
+			if (res['errno'] !== 0) {
+				$('#modal-msg-content').html(res['msg']);
+				$('#modal-msg').modal('show');
 			}
-			$('#table-cluster').bootstrapTable("refresh");
+			$('#table-cluster').bootstrapTable('refresh');
 		});
 		ajax.fail(function (jqXHR, textStatus) {
-			$("#modal-msg-content").html("Request failed : " + jqXHR.statusText);
-			$("#modal-msg").modal('show');
-			$('#table-cluster').bootstrapTable("refresh");
+			$('#modal-msg-content').html('Request failed : ' + jqXHR.statusText);
+			$('#modal-msg').modal('show');
+			$('#table-cluster').bootstrapTable('refresh');
 		});
 	});
 
 }
 
 function load_clusters() {
-	$("#table-cluster").bootstrapTable({
+	$('#table-cluster').bootstrapTable({
 		url: 'service?action=cluster_list',
 		responseHandler: clusterResponseHandler,
 		sidePagination: 'server',
@@ -88,26 +90,56 @@ function load_clusters() {
 function clusterResponseHandler(res) {
 	if (res['errno'] === 0) {
 		var tmp = {};
-		tmp["total"] = res["count"];
-		tmp["rows"] = res["clusters"];
+		tmp['total'] = res['count'];
+		tmp['rows'] = res['clusters'];
 		return tmp;
 	}
-	$("#modal-msg-content").html(res["msg"]);
-	$("#modal-msg").modal('show');
+	$('#modal-msg-content').html(res['msg']);
+	$('#modal-msg').modal('show');
 	return [];
 }
 
 function clusterOperateFormatter(value, row, index) {
 	var div = '<div class="btn-group" role="group" aria-label="...">';
-	div += '<button class="btn btn-default view"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;</button>';
+	div += '<button class="btn btn-default edit"><i class="glyphicon glyphicon-edit"></i>&nbsp;</button>';
 	div += '<button class="btn btn-default remove"><i class="glyphicon glyphicon-remove"></i>&nbsp;</button>';
 	div += '</div>';
 	return div;
 }
 
+function cluster_gets(cb) {
+	var ajax = $.ajax({
+		url: 'service?action=cluster_list',
+		type: 'GET',
+		data: {}
+	});
+	ajax.done(function (res) {
+		if (res["errno"] !== 0) {
+			$("#modal-msg-content").html(res['msg']);
+			$("#modal-msg").modal('show');
+		} else {
+			if (cb !== undefined) {
+				cb(res['clusters']);
+			}
+		}
+	});
+	ajax.fail(function (jqXHR, textStatus) {
+		$("#modal-msg-content").html('Request failed : ' + jqXHR.statusText);
+		$("#modal-msg").modal('show');
+	});
+}
+
 window.clusterOperateEvents = {
-	'click .view': function (e, value, row, index) {
-		$('#form-agent-name').val(row.name);
+	'click .edit': function (e, value, row, index) {
+		$('#form-cluster-submit-type').val('update');
+		$('#form-cluster-name').val(row.name);
+		$('#form-cluster-name').attr('disabled', 'disabled');
+		$('#form-cluster-weight').val(row.weight);
+		$('#form-cluster-reserved').prop('checked', row.reserved === true);
+		$('#form-cluster-quota_gpu').val(row.quota_gpu);
+		$('#form-cluster-quota_gpu_mem').val(row.quota_gpu_mem);
+		$('#form-cluster-quota_cpu').val(row.quota_cpu);
+		$('#form-cluster-quota_mem').val(row.quota_mem);
 		$('#modal-cluster').modal('show');
 	},
 	'click .remove': function (e, value, row, index) {
@@ -115,21 +147,21 @@ window.clusterOperateEvents = {
 			return;
 		}
 		var ajax = $.ajax({
-			url: "service?action=cluster_remove",
+			url: 'service?action=cluster_remove',
 			type: 'POST',
 			data: {name: row.name}
 		});
 		ajax.done(function (res) {
-			if (res["errno"] !== 0) {
-				$("#modal-msg-content").html(res["msg"]);
+			if (res['errno'] !== 0) {
+				$("#modal-msg-content").html(res['msg']);
 				$("#modal-msg").modal('show');
 			}
-			$('#table-cluster').bootstrapTable("refresh");
+			$('#table-cluster').bootstrapTable('refresh');
 		});
 		ajax.fail(function (jqXHR, textStatus) {
-			$("#modal-msg-content").html("Request failed : " + jqXHR.statusText);
+			$("#modal-msg-content").html('Request failed : ' + jqXHR.statusText);
 			$("#modal-msg").modal('show');
-			$('#table-cluster').bootstrapTable("refresh");
+			$('#table-cluster').bootstrapTable('refresh');
 		});
 	}
 };

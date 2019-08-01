@@ -1,17 +1,22 @@
 function register_events_job() {
 	$('#btn-job-add').click(function (e) {
-		cb = function (workspaces) {
+		var cb = function (workspaces) {
 			$('#form-job-workspace').children().remove();
-
-			var newGroupOption = '<option value="" selected>None</option>';
-			$('#form-job-workspace').append(newGroupOption);
-
 			$.each(workspaces, function (i, workspace) {
 				var newGroupOption = '<option value="' + workspace.git_repo + '">' + workspace.name + '</option>';
 				$('#form-job-workspace').append(newGroupOption);
 			});
 		};
 		wordspace_gets(null, cb);
+
+		var cb_cluster = function (clusters) {
+			$('#form-job-cluster').children().remove();
+			$.each(clusters, function (i, cluster) {
+				var newGroupOption = '<option value="' + cluster.name + '">' + cluster.name + '</option>';
+				$('#form-job-cluster').append(newGroupOption);
+			});
+		};
+		cluster_gets(cb_cluster);
 
 		$('#form-job-name').val('');
 		$('#form-job-priority').val(25);

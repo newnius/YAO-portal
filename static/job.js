@@ -181,7 +181,7 @@ var workspaceFormatter = function (workspace) {
 };
 
 var clusterFormatter = function (cluster) {
-	return 'default';
+	return cluster;
 };
 
 var priorityFormatter = function (status) {

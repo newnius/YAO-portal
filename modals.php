@@ -127,12 +127,12 @@
 							</div>
 						</div>
 					</div>
-					<label>Environment</label>
+					<label>Tasks</label>
 					<div id="form-job-tasks">
 						<div class="row">
-							<div class="col-md-6">
+							<div class="col-md-4">
 								<label>Docker Image</label>
-								<select class="form-control form-control task-image" required>
+								<select title="docker image" class="form-control form-control task-image" required>
 									<option value="quickdeploy/yao-tensorflow:1.12" selected>
 										quickdeploy/yao-tensorflow:1.12
 									</option>
@@ -144,6 +144,12 @@
 								<div class="form-group">
 									<input type="text" class="form-control task-cmd" maxlength="255"
 									       placeholder="Command to bring up task"/>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<label>Remove</label>
+								<div class="form-group">
+									<button type="button" class="btn btn-default task-remove">Remove</button>
 								</div>
 							</div>
 							<div class="col-md-2">
@@ -168,7 +174,7 @@
 								</div>
 							</div>
 							<div class="col-md-2">
-								<label>GPU Model<abbr title="best GPU model needed">?</abbr></label>
+								<label>GPU Model<abbr title="preferred GPU model">?</abbr></label>
 								<select class="form-control form-control task-gpu-model" required>
 									<option value="k40">K40</option>
 									<option value="k80" selected>K80</option>
@@ -193,6 +199,7 @@
 					</div>
 					<div>
 						<button id="form-job-submit" type="submit" class="btn btn-primary btn-lg">Submit</button>
+						<button id="form-job-task-add" type="button" class="btn btn-default btn-lg">Add Task</button>
 					</div>
 				</form>
 			</div>

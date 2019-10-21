@@ -24,6 +24,20 @@ function register_events_job() {
 		$('#modal-job').modal('show');
 	});
 
+	$('#form-job-tasks').on('click', '.task-remove', function (e) {
+		if ($('#form-job-tasks').find('.row').length <= 1) {
+			return;
+		}
+		var task = $(this).parent().parent().parent();
+		task.remove();
+	});
+
+	$('#form-job-task-add').click(function (e) {
+		var tasks = $('#form-job-tasks');
+		var newTask = $('#form-job-tasks').find('.row').eq(0).clone();
+		tasks.append(newTask);
+	});
+
 	$("#form-job-submit").click(function (e) {
 		var name = $('#form-job-name').val();
 		var workspace = $('#form-job-workspace').val();

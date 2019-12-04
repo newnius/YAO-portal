@@ -1,30 +1,65 @@
 <?php
 
-define('YAO_VERSION', '0.2.1');
+$settings = [
+	'site' => [
+		'version' => '0.2.2',
+		'scheduler_addr' => 'http://127.0.0.1',
+		'base_url' => 'http://127.0.0.1', /* make absolute url for SEO and avoid hijack, no '/' at the end */
+		'timezone' => 'Asia/Shanghai',
+	],
+	'mysql' => [
+		'host' => 'localhost',
+		'port' => 3306,
+		'database' => 'yao',
+		'user' => 'root', /* It is not recommended to use `root` in production environment */
+		'password' => '',
+		'show_error' => false, /* set to true to see detailed Mysql errors __only__ for debug purpose */
+	],
+	'redis' => [ /* Make sure that your Redis only listens to Intranet */
+		'scheme' => 'tcp',
+		'host' => 'localhost',
+		'port' => 6379,
+		'show_error' => false, /* set to true to see detailed Redis errors __only__ for debug purpose */
+	],
+	'oauth' => [
+		'site' => 'https://quickauth.newnius.com',
+		'client_id' => 'XgaII6NxeE08LtKB',
+		'client_secret' => 'L9hdi4dQToM0GsDLtcYYQ3k4ZDEjuGVOtPS3nOVKlo6cxLcVjH9TqvmTBiHAgLp2',
+	]
+];
 
-/* Custom */
 
+foreach ($settings as $category => $values) {
+	foreach ($values as $option => $value) {
+		$env = getenv(strtoupper($category . '_' . $option));
+		if ($env !== false) {
+			$settings[$category][$option] = $env;
+		};
+	}
+}
+
+define('YAO_VERSION', strval($settings['site']['version']));
+
+define('YAO_SCHEDULER_ADDR', strval($settings['site']['scheduler_addr']));
 
 /* Mysql */
-/* It is not recommended to use `root` in production environment */
-define('DB_HOST', 'localhost');
-define('DB_PORT', 3306);
-define('DB_NAME', 'yao');
-define('DB_USER', 'root');
-define('DB_PASSWORD', '');
-define('DB_SHOW_ERROR', false); // set to true to see detailed Mysql errors __only__ for debug purpose
+define('DB_HOST', strval($settings['mysql']['host']));
+define('DB_PORT', intval($settings['mysql']['port']));
+define('DB_NAME', strval($settings['mysql']['database']));
+define('DB_USER', strval($settings['mysql']['user']));
+define('DB_PASSWORD', strval($settings['mysql']['password']));
+define('DB_SHOW_ERROR', boolval($settings['mysql']['show_error']));
 
 /* Redis */
-/* Make sure that your Redis only listens to Intranet */
-define('REDIS_SCHEME', 'tcp');
-define('REDIS_HOST', 'localhost');
-define('REDIS_PORT', 6379);
-define('REDIS_SHOW_ERROR', false);  // set to true to see detailed Redis errors __only__ for debug purpose
+define('REDIS_SCHEME', strval($settings['redis']['scheme']));
+define('REDIS_HOST', strval($settings['redis']['host']));
+define('REDIS_PORT', intval($settings['redis']['port']));
+define('REDIS_SHOW_ERROR', boolval($settings['redis']['show_error']));
 
 /* Site */
-define('BASE_URL', 'http://127.0.0.1'); // make absolute url for SEO and avoid hijack, no '/' at the end
+define('BASE_URL', strval($settings['site']['base_url']));
 define('WEB_ROOT', __DIR__);
-define('FEEDBACK_EMAIL', 'support@newnius.com');
+define('FEEDBACK_EMAIL', 'mail@example.com');
 
 /* Auth */
 define('AUTH_CODE_TIMEOUT', 300); // 5 min
@@ -42,11 +77,10 @@ define('RATE_LIMIT_PREFIX', 'rl');
 
 /* OAuth */
 /* The default conf is only usable when this runs on localhost */
-define('OAUTH_SITE', 'https://quickauth.newnius.com');
-define('OAUTH_CLIENT_ID', 'XgaII6NxeE08LtKB');
-define('OAUTH_CLIENT_SECRET', 'L9hdi4dQToM0GsDLtcYYQ3k4ZDEjuGVOtPS3nOVKlo6cxLcVjH9TqvmTBiHAgLp2');
-
+define('OAUTH_SITE', strval($settings['oauth']['site']));
+define('OAUTH_CLIENT_ID', strval($settings['oauth']['client_id']));
+define('OAUTH_CLIENT_SECRET', strval($settings['oauth']['client_secret']));
 
 header("content-type:text/html; charset=utf-8");
 
-date_default_timezone_set('Asia/Shanghai');
+date_default_timezone_set(strval($settings['site']['timezone']));

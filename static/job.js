@@ -170,6 +170,12 @@ function load_jobs(scope) {
 			valign: 'middle',
 			formatter: timeFormatter
 		}, {
+			field: 'updated_at',
+			title: 'Updated At',
+			align: 'center',
+			valign: 'middle',
+			formatter: timeFormatter
+		}, {
 			field: 'status',
 			title: 'Status',
 			align: 'center',

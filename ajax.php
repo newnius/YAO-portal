@@ -11,6 +11,7 @@ require_once('job.logic.php');
 require_once('agent.logic.php');
 require_once('workspace.logic.php');
 require_once('cluster.logic.php');
+require_once('debug.logic.php');
 
 require_once('config.inc.php');
 require_once('init.inc.php');
@@ -202,6 +203,14 @@ switch ($action) {
 		$cluster = new CRObject();
 		$cluster->set('name', cr_get_POST('name'));
 		$res = cluster_remove($cluster);
+		break;
+
+	case 'get_counter':
+		$res = debug_get_counter();
+		break;
+
+	case 'get_bindings':
+		$res = debug_get_bindings();
 		break;
 
 	case 'user_signout':

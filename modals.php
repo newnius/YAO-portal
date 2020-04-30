@@ -155,21 +155,21 @@
 									<button type="button" class="btn btn-default task-remove">Remove</button>
 								</div>
 							</div>
-							<div class="col-md-1">
+							<div class="col-md-2">
 								<label>Host Name</label>
 								<div class="form-group">
 									<input type="text" class="form-control task-name" maxlength="32"
 									       placeholder="Task Name & Node Name" value="node1" required/>
 								</div>
 							</div>
-							<div class="col-md-1">
+							<div class="col-md-2">
 								<label>Node Role<abbr title="Node role">?</abbr></label>
 								<select class="form-control form-control task-is-ps" required>
 									<option value="1">PS</option>
 									<option value="0" selected>Worker</option>
 								</select>
 							</div>
-							<div class="col-md-2">
+							<div class="col-md-1">
 								<label>CPU Number</label>
 								<div class="form-group">
 									<input type="number" class="form-control task-cpu" step="1" min="1" value="1"
@@ -191,7 +191,7 @@
 									<option value="P100">P100</option>
 								</select>
 							</div>
-							<div class="col-md-2">
+							<div class="col-md-1">
 								<label>GPU Number</label>
 								<div class="form-group">
 									<input type="number" class="form-control task-gpu-num" step="1" min="1" value="1"

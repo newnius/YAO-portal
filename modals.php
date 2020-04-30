@@ -155,12 +155,19 @@
 									<button type="button" class="btn btn-default task-remove">Remove</button>
 								</div>
 							</div>
-							<div class="col-md-2">
+							<div class="col-md-1">
 								<label>Host Name</label>
 								<div class="form-group">
 									<input type="text" class="form-control task-name" maxlength="32"
 									       placeholder="Task Name & Node Name" value="node1" required/>
 								</div>
+							</div>
+							<div class="col-md-1">
+								<label>Node Role<abbr title="Node role">?</abbr></label>
+								<select class="form-control form-control task-is-ps" required>
+									<option value="1">PS</option>
+									<option value="0" selected>Worker</option>
+								</select>
 							</div>
 							<div class="col-md-2">
 								<label>CPU Number</label>

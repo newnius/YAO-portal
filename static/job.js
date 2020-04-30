@@ -57,6 +57,8 @@ function register_events_job() {
 			task['memory'] = $(this).find('.task-mem').eq(0).val();
 			task['gpu_number'] = $(this).find('.task-gpu-num').eq(0).val();
 			task['gpu_memory'] = $(this).find('.task-gpu-mem').eq(0).val();
+			task['is_ps'] = $(this).find('.task-is-ps').eq(0).val();
+			task['gpu_model'] = $(this).find('.task-gpu-model').eq(0).val();
 			tasks.push(task);
 		});
 

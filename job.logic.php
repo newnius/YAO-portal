@@ -31,6 +31,7 @@ function job_submit(CRObject $job)
 		$task['memory'] = intval($task['memory']);
 		$task['gpu_number'] = intval($task['gpu_number']);
 		$task['gpu_memory'] = intval($task['gpu_memory']);
+		$task['is_ps'] = $task['is_ps'] == 1;
 		$tasks[$i] = $task;
 	}
 	$job->set('tasks', $tasks);

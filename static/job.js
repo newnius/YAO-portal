@@ -44,6 +44,7 @@ function register_events_job() {
 		var cluster = $('#form-job-cluster').val();
 		var priority = $('#form-job-priority').val();
 		var run_before = $('#form-job-run-before').val();
+		var locality = $('#form-job-locality').val();
 		if (run_before.length !== 0) {
 			run_before = moment(run_before).unix();
 		}

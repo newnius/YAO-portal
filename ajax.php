@@ -76,6 +76,7 @@ switch ($action) {
 		$job->set('workspace', cr_get_POST('workspace'));
 		$job->set('priority', cr_get_POST('priority'));
 		$job->set('run_before', cr_get_POST('run_before'));
+		$job->set('locality', cr_get_POST('locality'));
 		$job->set('tasks', cr_get_POST('tasks'));
 		$res = job_submit($job);
 		break;

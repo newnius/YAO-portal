@@ -38,6 +38,7 @@ function job_submit(CRObject $job)
 	$job->set('workspace', $job->get('workspace'));
 	$job->set('group', $job->get('virtual_cluster'));
 	$job->set('priority', $job->getInt('priority'));
+	$job->set('locality', $job->getInt('locality'));
 	$job->set('run_before', $job->getInt('run_before'));
 	$job->set('created_by', $job->getInt('created_by'));
 	$data['job'] = json_encode($job);

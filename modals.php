@@ -170,7 +170,7 @@
 								</select>
 							</div>
 							<div class="col-md-1">
-								<label>CPU Number</label>
+								<label>CPU</label>
 								<div class="form-group">
 									<input type="number" class="form-control task-cpu" step="1" min="1" value="1"
 									       placeholder="number of CPU required" required/>
@@ -192,7 +192,7 @@
 								</select>
 							</div>
 							<div class="col-md-1">
-								<label>GPU Number</label>
+								<label>GPU</label>
 								<div class="form-group">
 									<input type="number" class="form-control task-gpu-num" step="1" min="1" value="1"
 									       placeholder="number of GPU cards required" required/>

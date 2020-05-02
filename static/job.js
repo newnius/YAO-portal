@@ -85,6 +85,7 @@ function register_events_job() {
 				cluster: cluster,
 				priority: priority,
 				run_before: run_before,
+				locality: locality,
 				tasks: JSON.stringify(tasks)
 			}
 		});

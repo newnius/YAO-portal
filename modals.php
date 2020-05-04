@@ -145,7 +145,7 @@
 							<div class="col-md-6">
 								<label>CMD</label>
 								<div class="form-group">
-									<input type="text" class="form-control task-cmd" maxlength="255"
+									<input type="text" class="form-control task-cmd" maxlength=""
 									       placeholder="Command to bring up task"/>
 								</div>
 							</div>

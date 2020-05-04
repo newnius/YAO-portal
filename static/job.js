@@ -236,6 +236,8 @@ var statusFormatter = function (status) {
 			return '<span class="text-danger">Stopped</span>';
 		case 4:
 			return '<span class="text-success">Finished</span>';
+		case 5:
+			return '<span class="text-success">Failed</span>';
 	}
 	return 'Unknown(' + status + ')';
 };

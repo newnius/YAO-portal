@@ -363,6 +363,11 @@ function load_job_status(name) {
 			valign: 'middle',
 			visible: false
 		}, {
+			field: 'node',
+			title: 'Node',
+			align: 'center',
+			valign: 'middle'
+		}, {
 			field: 'status',
 			title: 'Status',
 			align: 'center',

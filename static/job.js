@@ -229,15 +229,15 @@ var statusFormatter = function (status) {
 		case 0:
 			return '<span class="text-normal">Submitted</span>';
 		case 1:
-			return '<span class="text-normal">Starting</span>';
+			return '<span class="text-info">Starting</span>';
 		case 2:
-			return '<span class="text-info">Running</span>';
+			return '<span class="text-primary">Running</span>';
 		case 3:
 			return '<span class="text-danger">Stopped</span>';
 		case 4:
 			return '<span class="text-success">Finished</span>';
 		case 5:
-			return '<span class="text-success">Failed</span>';
+			return '<span class="text-warning">Failed</span>';
 	}
 	return 'Unknown(' + status + ')';
 };

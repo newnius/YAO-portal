@@ -150,7 +150,7 @@ function load_jobs(scope) {
 			formatter: workspaceFormatter
 		}, {
 			field: 'group',
-			title: 'Virtual Cluster',
+			title: 'Group',
 			align: 'center',
 			valign: 'middle',
 			formatter: clusterFormatter
@@ -431,7 +431,7 @@ window.jobStatusOperateEvents = {
 	},
 	'click .download': function (e, value, row, index) {
 		var job = getParameterByName('name');
-		var task = row.id;
+		var task = row.hostname;
 
 		var ajax = $.ajax({
 			url: "service?action=task_logs",
@@ -445,8 +445,9 @@ window.jobStatusOperateEvents = {
 			if (res["errno"] !== 0) {
 				$("#modal-msg-content").html(res["msg"]);
 				$("#modal-msg").modal('show');
+			} else {
+				download(res['logs'], job + '_' + task + '.txt', "text/plain");
 			}
-			download(res['logs'], job + '_' + task + '.txt', "text/plain");
 		});
 		ajax.fail(function (jqXHR, textStatus) {
 			$("#modal-msg-content").html("Request failed : " + jqXHR.statusText);

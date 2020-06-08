@@ -82,20 +82,21 @@
 						<input type="text" id="form-job-name" class="form-control" maxlength="64"
 						       placeholder="A readable job name" required/>
 					</div>
-					<label>Workspace</label>
+					<label>Input Dir</label>
 					<div class="form-group form-group-lg">
 						<label for="form-job-workspace" class="sr-only">Workspace</label>
 						<select id="form-job-workspace" class="form-control">
 							<option value="">None</option>
 						</select>
 					</div>
-					<label>Virtual Cluster</label>
+					<label>Queue</label>
 					<div class="form-group form-group-lg">
 						<label for="form-job-cluster" class="sr-only">Virtual Cluster</label>
 						<select id="form-job-cluster" class="form-control">
 							<option value="1">default</option>
 						</select>
 					</div>
+
 					<label>Priority</label>
 					<div class="form-group form-group-lg">
 						<label for="form-job-priority" class="sr-only">Job Priority</label>
@@ -106,6 +107,7 @@
 							<option value="1">Low</option>
 						</select>
 					</div>
+					<!--
 					<label>Locality</label>
 					<div class="form-group form-group-lg">
 						<label for="form-job-locality" class="sr-only">Locality</label>
@@ -115,6 +117,7 @@
 							<option value="-1">Negative</option>
 						</select>
 					</div>
+					-->
 					<label class="hidden">Run Before</label>
 					<div class="form-group form-group-lg hidden">
 						<div class='input-group date date-picker'>
@@ -169,7 +172,7 @@
 									<option value="0" selected>Worker</option>
 								</select>
 							</div>
-							<div class="col-md-1">
+							<div class="col-md-2">
 								<label>CPU</label>
 								<div class="form-group">
 									<input type="number" class="form-control task-cpu" step="1" min="1" value="1"
@@ -183,7 +186,7 @@
 									       value="4096" placeholder="MB" required/>
 								</div>
 							</div>
-							<div class="col-md-2">
+							<div class="col-md-2 hidden">
 								<label>GPU Model<abbr title="preferred GPU model">?</abbr></label>
 								<select class="form-control form-control task-gpu-model" required>
 									<option value="k40">K40</option>
@@ -191,7 +194,7 @@
 									<option value="P100">P100</option>
 								</select>
 							</div>
-							<div class="col-md-1">
+							<div class="col-md-2">
 								<label>GPU</label>
 								<div class="form-group">
 									<input type="number" class="form-control task-gpu-num" step="1" min="1" value="1"

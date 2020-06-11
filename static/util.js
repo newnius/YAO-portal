@@ -4,7 +4,7 @@ function timeFormatter(unixTimestamp) {
 	}
 	var d = new Date(unixTimestamp * 1000);
 	d.setTime(d.getTime() - d.getTimezoneOffset() * 60 * 1000);
-	return formatDate(d, '%Y-%M-%d %H:%m');
+	return formatDate(d, '%Y-%M-%d %H:%m:%s');
 }
 
 function formatDate(date, fmt) {

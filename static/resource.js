@@ -71,6 +71,7 @@ function resourceResponseHandler(res) {
 		tmp["rows"] = [];
 		$.each(res["resources"], function (i, node) {
 			var item = {
+				'id': node.id,
 				'host': node.host,
 				'CPU': node.cpu_num,
 				'MEM': node.mem_available + ' / ' + node.mem_total + ' (GB)',

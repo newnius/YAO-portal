@@ -187,6 +187,12 @@ function load_jobs(scope) {
 			formatter: statusFormatter,
 			visible: true
 		}, {
+			field: 'base_priority',
+			title: 'BasePriority',
+			align: 'center',
+			valign: 'middle',
+			visible: false
+		}, {
 			field: 'operate',
 			title: 'Operate',
 			align: 'center',

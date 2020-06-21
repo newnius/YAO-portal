@@ -99,6 +99,13 @@ switch ($action) {
 		$res = job_status($job);
 		break;
 
+	case 'job_predict_req':
+		$job = new CRObject();
+		$job->set('name', cr_get_POST('name'));
+		$job->set('cmd', cr_get_POST('cmd'));
+		$res = job_predict_req($job);
+		break;
+
 	case 'summary_get':
 		$res = summary_get();
 		break;

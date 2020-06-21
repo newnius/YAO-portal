@@ -147,6 +147,32 @@ function job_status(CRObject $job)
 	return $res;
 }
 
+function job_predict_req(CRObject $job)
+{
+	if (!AccessController::hasAccess(Session::get('role', 'visitor'), 'job.list')) {
+		$res['errno'] = Code::NO_PRIVILEGE;
+		return $res;
+	}
+
+	$spider = new Spider();
+	$spider->doGet(YAO_SCHEDULER_ADDR . '?action=job_predict_req&name=' . $job->get('name') . '&cmd=' . $job->get('cmd'));
+	$msg = json_decode($spider->getBody(), true);
+
+	if ($msg['code'] !== 0) {
+		$res['errno'] = $msg['code'];
+		$res['msg'] = $msg['error'];
+		return $res;
+	}
+
+	$res['cpu'] = $msg['cpu'];
+	$res['mem'] = $msg['mem'];
+	$res['gpu'] = $msg['gpu'];
+	$res['gmem'] = $msg['gmem'];
+	$res['bw'] = $msg['bw'];
+	$res['errno'] = Code::SUCCESS;
+	return $res;
+}
+
 function summary_get()
 {
 	if (!AccessController::hasAccess(Session::get('role', 'visitor'), 'system.summary')) {

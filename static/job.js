@@ -56,6 +56,8 @@ function register_events_job() {
 
 				$('#form-job-tasks').find('.row').each(function () {
 					$(this).find('.task-cpu').eq(0).val(4);
+					$(this).find('.task-mem').eq(0).val(8192);
+					$(this).find('.task-gpu-mem').eq(0).val(8192);
 				});
 			}
 		});

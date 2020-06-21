@@ -158,7 +158,11 @@ function job_predict_req(CRObject $job)
 	$spider->doGet(YAO_SCHEDULER_ADDR . '?action=job_predict_req&name=' . $job->get('name') . '&cmd=' . $job->get('cmd'));
 	$msg = json_decode($spider->getBody(), true);
 
-	var_dump($msg);
+	if ($msg === NULL) {
+		$res['errno'] = Code::UNKNOWN_ERROR;
+		$res['msg'] = 'response is null';
+		return $res;
+	}
 
 	if ($msg['code'] !== 0) {
 		$res['errno'] = $msg['code'];

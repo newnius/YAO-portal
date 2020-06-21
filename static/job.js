@@ -32,6 +32,40 @@ function register_events_job() {
 		task.remove();
 	});
 
+	$("#form-job-predict-req").click(function (e) {
+		var name = $('#form-job-name').val();
+		var cmd = '';
+		$('#form-job-tasks').find('.row').each(function () {
+			cmd = $(this).find('.task-cmd').eq(0).val();
+		});
+
+		var ajax = $.ajax({
+			url: "service?action=job_predict_req",
+			type: 'GET',
+			data: {
+				name: name,
+				cmd: cmd
+			}
+		});
+		ajax.done(function (res) {
+			if (res["errno"] !== 0) {
+				$("#modal-msg-content").html(res["msg"]);
+				$("#modal-msg").modal('show');
+			} else {
+				console.log(res);
+
+				$('#form-job-tasks').find('.row').each(function () {
+					$(this).find('.task-cpu').eq(0).val(4);
+				});
+			}
+		});
+		ajax.fail(function (jqXHR, textStatus) {
+			$("#modal-msg-content").html("Request failed : " + jqXHR.statusText);
+			$("#modal-msg").modal('show');
+			$('#table-job').bootstrapTable("refresh");
+		});
+	});
+
 	$('#form-job-task-add').click(function (e) {
 		var tasks = $('#form-job-tasks');
 		var newTask = $('#form-job-tasks').find('.row').eq(0).clone();

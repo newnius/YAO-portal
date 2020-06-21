@@ -107,9 +107,8 @@
 							<option value="1">Low</option>
 						</select>
 					</div>
-					<!--
 					<label>Locality</label>
-					<div class="form-group form-group-lg">
+					<div class="form-group form-group-lg hidden">
 						<label for="form-job-locality" class="sr-only">Locality</label>
 						<select id="form-job-locality" class="form-control">
 							<option value="1">Positive</option>
@@ -117,7 +116,6 @@
 							<option value="-1">Negative</option>
 						</select>
 					</div>
-					-->
 					<label class="hidden">Run Before</label>
 					<div class="form-group form-group-lg hidden">
 						<div class='input-group date date-picker'>
@@ -213,6 +211,7 @@
 					<div>
 						<button id="form-job-submit" type="submit" class="btn btn-primary btn-lg">Submit</button>
 						<button id="form-job-task-add" type="button" class="btn btn-default btn-lg">Add Task</button>
+						<button id="form-job-predict-req" type="button" class="btn btn-default btn-lg">Predict</button>
 					</div>
 				</form>
 			</div>

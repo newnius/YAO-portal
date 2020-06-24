@@ -34,17 +34,50 @@ function register_events_job() {
 
 	$("#form-job-predict-req").click(function (e) {
 		var name = $('#form-job-name').val();
-		var cmd = '';
+		var workspace = $('#form-job-workspace').val();
+		var cluster = $('#form-job-cluster').val();
+		var priority = $('#form-job-priority').val();
+		var run_before = $('#form-job-run-before').val();
+		var locality = $('#form-job-locality').val();
+		if (run_before.length !== 0) {
+			run_before = moment(run_before).unix();
+		}
+		var tasks = [];
 		$('#form-job-tasks').find('.row').each(function () {
-			cmd = $(this).find('.task-cmd').eq(0).val();
+			var task = {};
+			task['name'] = $(this).find('.task-name').eq(0).val();
+			task['image'] = $(this).find('.task-image').eq(0).val();
+			task['cmd'] = $(this).find('.task-cmd').eq(0).val();
+			task['cpu_number'] = $(this).find('.task-cpu').eq(0).val();
+			task['memory'] = $(this).find('.task-mem').eq(0).val();
+			task['gpu_number'] = $(this).find('.task-gpu-num').eq(0).val();
+			task['gpu_memory'] = $(this).find('.task-gpu-mem').eq(0).val();
+			task['is_ps'] = $(this).find('.task-is-ps').eq(0).val();
+			task['gpu_model'] = $(this).find('.task-gpu-model').eq(0).val();
+			tasks.push(task);
+		});
+
+		/* TODO validate form */
+		if (name.length === 0) {
+			return true;
+		}
+		$.each(tasks, function (i, task) {
+			if (task['name'].length === 0) {
+				return true;
+			}
 		});
 
 		var ajax = $.ajax({
-			url: "service?action=job_predict_req",
-			type: 'GET',
+			url: "service?action=job_predict_req&role=PS",
+			type: 'POST',
 			data: {
 				name: name,
-				cmd: cmd
+				workspace: workspace,
+				cluster: cluster,
+				priority: priority,
+				run_before: run_before,
+				locality: locality,
+				tasks: JSON.stringify(tasks)
 			}
 		});
 		ajax.done(function (res) {
@@ -55,9 +88,9 @@ function register_events_job() {
 				console.log(res);
 
 				$('#form-job-tasks').find('.row').each(function () {
-					$(this).find('.task-cpu').eq(0).val(4);
-					$(this).find('.task-mem').eq(0).val(8192);
-					$(this).find('.task-gpu-mem').eq(0).val(8192);
+					$(this).find('.task-cpu').eq(0).val(res['cpu']);
+					$(this).find('.task-mem').eq(0).val(res['mem']);
+					$(this).find('.task-gpu-mem').eq(0).val(res['gpu_mem']);
 				});
 			}
 		});

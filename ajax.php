@@ -101,9 +101,15 @@ switch ($action) {
 
 	case 'job_predict_req':
 		$job = new CRObject();
-		$job->set('name', cr_get_POST('name'));
-		$job->set('cmd', cr_get_POST('cmd'));
-		$res = job_predict_req($job);
+		$job->set('name', cr_get_POST('name', '') . '-' . time() . Random::randomInt(1000, 9999));
+		$job->set('virtual_cluster', cr_get_POST('cluster'));
+		$job->set('workspace', cr_get_POST('workspace'));
+		$job->set('priority', cr_get_POST('priority'));
+		$job->set('run_before', cr_get_POST('run_before'));
+		$job->set('locality', cr_get_POST('locality'));
+		$job->set('tasks', cr_get_POST('tasks'));
+		$role = cr_get_GET('role');
+		$res = job_predict_req($job, $role);
 		break;
 
 	case 'summary_get':

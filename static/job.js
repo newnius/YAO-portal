@@ -67,37 +67,44 @@ function register_events_job() {
 			}
 		});
 
-		var ajax = $.ajax({
-			url: "service?action=job_predict_req&role=PS",
-			type: 'POST',
-			data: {
-				name: name,
-				workspace: workspace,
-				cluster: cluster,
-				priority: priority,
-				run_before: run_before,
-				locality: locality,
-				tasks: JSON.stringify(tasks)
-			}
-		});
-		ajax.done(function (res) {
-			if (res["errno"] !== 0) {
-				$("#modal-msg-content").html(res["msg"]);
-				$("#modal-msg").modal('show');
-			} else {
-				console.log(res);
+		var roles = ['PS', 'Worker'];
+		$.each(roles, function (i, role) {
+			var ajax = $.ajax({
+				url: "service?action=job_predict_req&role=" + role,
+				type: 'POST',
+				data: {
+					name: name,
+					workspace: workspace,
+					cluster: cluster,
+					priority: priority,
+					run_before: run_before,
+					locality: locality,
+					tasks: JSON.stringify(tasks)
+				}
+			});
+			ajax.done(function (res) {
+				if (res["errno"] !== 0) {
+					$("#modal-msg-content").html(res["msg"]);
+					$("#modal-msg").modal('show');
+				} else {
+					console.log(res);
 
-				$('#form-job-tasks').find('.row').each(function () {
-					$(this).find('.task-cpu').eq(0).val(res['cpu']);
-					$(this).find('.task-mem').eq(0).val(res['mem']);
-					$(this).find('.task-gpu-mem').eq(0).val(res['gpu_mem']);
-				});
-			}
-		});
-		ajax.fail(function (jqXHR, textStatus) {
-			$("#modal-msg-content").html("Request failed : " + jqXHR.statusText);
-			$("#modal-msg").modal('show');
-			$('#table-job').bootstrapTable("refresh");
+					$('#form-job-tasks').find('.row').each(function () {
+						if ((role === 'PS' && $(this).find('.task-cpu').eq(0).val() === 1)
+							|| (role === 'Worker' && $(this).find('.task-cpu').eq(0).val() === 0)) {
+							$(this).find('.task-cpu').eq(0).val(res['cpu']);
+							$(this).find('.task-mem').eq(0).val(res['mem']);
+							$(this).find('.task-gpu-mem').eq(0).val(res['gpu_mem']);
+						}
+					});
+				}
+			});
+			ajax.fail(function (jqXHR, textStatus) {
+				$("#modal-msg-content").html("Request failed : " + jqXHR.statusText);
+				$("#modal-msg").modal('show');
+				$('#table-job').bootstrapTable("refresh");
+			});
+
 		});
 	});
 
@@ -144,7 +151,6 @@ function register_events_job() {
 
 
 		$('#modal-job').modal('hide');
-
 		var ajax = $.ajax({
 			url: "service?action=job_submit",
 			type: 'POST',

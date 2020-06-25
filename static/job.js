@@ -90,7 +90,7 @@ function register_events_job() {
 					console.log(res);
 
 					$('#form-job-tasks').find('.row').each(function () {
-						var taskRole = $(this).find('.task-is-ps').eq(0).val();
+						var taskRole = parseInt($(this).find('.task-is-ps').eq(0).val());
 						console.log(taskRole);
 						if ((role === 'PS' && taskRole === 1) || (role === 'Worker' && taskRole === 0)) {
 							$(this).find('.task-cpu').eq(0).val(res['cpu']);

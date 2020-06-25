@@ -18,9 +18,9 @@ function register_events_job() {
 		};
 		cluster_gets(cb_cluster);
 
-		$('#form-job-name').val('');
+		//$('#form-job-name').val('');
 		$('#form-job-priority').val(25);
-		$('#form-job-cluster').val(1);
+		//$('#form-job-cluster').val(1);
 		$('#modal-job').modal('show');
 	});
 
@@ -90,8 +90,9 @@ function register_events_job() {
 					console.log(res);
 
 					$('#form-job-tasks').find('.row').each(function () {
-						if ((role === 'PS' && $(this).find('.task-is-ps').eq(0).val() === 1)
-							|| (role === 'Worker' && $(this).find('.task-is-ps').eq(0).val() === 0)) {
+						var taskRole = $(this).find('.task-is-ps').eq(0).val();
+						console.log(taskRole);
+						if ((role === 'PS' && taskRole === 1) || (role === 'Worker' && taskRole === 0)) {
 							$(this).find('.task-cpu').eq(0).val(res['cpu']);
 							$(this).find('.task-mem').eq(0).val(res['mem']);
 							$(this).find('.task-gpu-mem').eq(0).val(res['gpu_mem']);

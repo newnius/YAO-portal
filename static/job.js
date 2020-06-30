@@ -252,7 +252,8 @@ function load_jobs(scope) {
 			title: 'Started At',
 			align: 'center',
 			valign: 'middle',
-			formatter: timeFormatter
+			formatter: timeFormatter,
+			visible: false
 		}, {
 			field: 'updated_at',
 			title: 'Updated At',

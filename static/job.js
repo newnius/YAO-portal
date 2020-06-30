@@ -87,8 +87,6 @@ function register_events_job() {
 					$("#modal-msg-content").html(res["msg"]);
 					$("#modal-msg").modal('show');
 				} else {
-					console.log(res);
-
 					$('#form-job-tasks').find('.row').each(function () {
 						var taskRole = parseInt($(this).find('.task-is-ps').eq(0).val());
 						console.log(taskRole);
@@ -246,6 +244,12 @@ function load_jobs(scope) {
 		}, {
 			field: 'created_at',
 			title: 'Created At',
+			align: 'center',
+			valign: 'middle',
+			formatter: timeFormatter
+		}, {
+			field: 'started_at',
+			title: 'Started At',
 			align: 'center',
 			valign: 'middle',
 			formatter: timeFormatter

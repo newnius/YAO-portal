@@ -107,7 +107,7 @@
 							<option value="1">Low</option>
 						</select>
 					</div>
-					<label>Locality</label>
+					<label class="hidden">Locality</label>
 					<div class="form-group form-group-lg hidden">
 						<label for="form-job-locality" class="sr-only">Locality</label>
 						<select id="form-job-locality" class="form-control">

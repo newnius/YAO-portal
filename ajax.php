@@ -112,6 +112,18 @@ switch ($action) {
 		$res = job_predict_req($job, $role);
 		break;
 
+	case 'job_predict_time':
+		$job = new CRObject();
+		$job->set('name', cr_get_POST('name', 'jobName'));
+		$job->set('virtual_cluster', cr_get_POST('cluster'));
+		$job->set('workspace', cr_get_POST('workspace'));
+		$job->set('priority', cr_get_POST('priority'));
+		$job->set('run_before', cr_get_POST('run_before'));
+		$job->set('locality', cr_get_POST('locality'));
+		$job->set('tasks', cr_get_POST('tasks'));
+		$res = job_predict_time($job, $role);
+		break;
+
 	case 'summary_get':
 		$res = summary_get();
 		break;

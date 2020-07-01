@@ -107,6 +107,68 @@ function register_events_job() {
 		});
 	});
 
+	$("#form-job-predict-time").click(function (e) {
+		var name = $('#form-job-name').val();
+		var workspace = $('#form-job-workspace').val();
+		var cluster = $('#form-job-cluster').val();
+		var priority = $('#form-job-priority').val();
+		var run_before = $('#form-job-run-before').val();
+		var locality = $('#form-job-locality').val();
+		if (run_before.length !== 0) {
+			run_before = moment(run_before).unix();
+		}
+		var tasks = [];
+		$('#form-job-tasks').find('.row').each(function () {
+			var task = {};
+			task['name'] = $(this).find('.task-name').eq(0).val();
+			task['image'] = $(this).find('.task-image').eq(0).val();
+			task['cmd'] = $(this).find('.task-cmd').eq(0).val();
+			task['cpu_number'] = $(this).find('.task-cpu').eq(0).val();
+			task['memory'] = $(this).find('.task-mem').eq(0).val();
+			task['gpu_number'] = $(this).find('.task-gpu-num').eq(0).val();
+			task['gpu_memory'] = $(this).find('.task-gpu-mem').eq(0).val();
+			task['is_ps'] = $(this).find('.task-is-ps').eq(0).val();
+			task['gpu_model'] = $(this).find('.task-gpu-model').eq(0).val();
+			tasks.push(task);
+		});
+
+		/* TODO validate form */
+		if (name.length === 0) {
+			return true;
+		}
+		$.each(tasks, function (i, task) {
+			if (task['name'].length === 0) {
+				return true;
+			}
+		});
+
+		var ajax = $.ajax({
+			url: "service?action=job_predict_time",
+			type: 'POST',
+			data: {
+				name: name,
+				workspace: workspace,
+				cluster: cluster,
+				priority: priority,
+				run_before: run_before,
+				locality: locality,
+				tasks: JSON.stringify(tasks)
+			}
+		});
+		ajax.done(function (res) {
+			if (res["errno"] !== 0) {
+				$("#modal-msg-content").html(res["msg"]);
+				$("#modal-msg").modal('show');
+			} else {
+				console.log(res);
+			}
+		});
+		ajax.fail(function (jqXHR, textStatus) {
+			$("#modal-msg-content").html("Request failed : " + jqXHR.statusText);
+			$("#modal-msg").modal('show');
+		});
+	});
+
 	$('#form-job-task-add').click(function (e) {
 		var tasks = $('#form-job-tasks');
 		var newTask = $('#form-job-tasks').find('.row').eq(0).clone();

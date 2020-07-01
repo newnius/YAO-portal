@@ -211,7 +211,8 @@
 					<div>
 						<button id="form-job-submit" type="submit" class="btn btn-primary btn-lg">Submit</button>
 						<button id="form-job-task-add" type="button" class="btn btn-default btn-lg">Add Task</button>
-						<button id="form-job-predict-req" type="button" class="btn btn-default btn-lg">Predict</button>
+						<button id="form-job-predict-req" type="button" class="btn btn-default">Predict</button>
+						<button id="form-job-predict-time" type="button" class="btn btn-default">PredictTime</button>
 					</div>
 				</form>
 			</div>

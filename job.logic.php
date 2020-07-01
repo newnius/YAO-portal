@@ -197,6 +197,54 @@ function job_predict_req(CRObject $job, $role)
 	return $res;
 }
 
+function job_predict_time(CRObject $job, $role)
+{
+	if (!AccessController::hasAccess(Session::get('role', 'visitor'), 'job.list')) {
+		$res['errno'] = Code::NO_PRIVILEGE;
+		return $res;
+	}
+
+	$spider = new Spider();
+	$tasks = json_decode($job->get('tasks'), true);
+	foreach ($tasks as $i => $task) {
+		$task['cpu_number'] = intval($task['cpu_number']);
+		$task['memory'] = intval($task['memory']);
+		$task['gpu_number'] = intval($task['gpu_number']);
+		$task['gpu_memory'] = intval($task['gpu_memory']);
+		$task['is_ps'] = $task['is_ps'] == 1;
+		$tasks[$i] = $task;
+	}
+	$job->set('tasks', $tasks);
+	$job->set('workspace', $job->get('workspace'));
+	$job->set('group', $job->get('virtual_cluster'));
+	$job->set('priority', $job->getInt('priority'));
+	$job->set('locality', $job->getInt('locality'));
+	$job->set('run_before', $job->getInt('run_before'));
+	$job->set('created_by', $job->getInt('created_by'));
+	$data['job'] = json_encode($job);
+
+	$spider->doPost(YAO_SCHEDULER_ADDR . '?action=job_predict_time', $data);
+	$msg = json_decode($spider->getBody(), true);
+
+	if ($msg === NULL) {
+		$res['errno'] = Code::UNKNOWN_ERROR;
+		$res['msg'] = 'response is null';
+		return $res;
+	}
+
+	if ($msg['code'] !== 0) {
+		$res['errno'] = $msg['code'];
+		$res['msg'] = $msg['error'];
+		return $res;
+	}
+
+	$res['total'] = $msg['total'];
+	$res['pre'] = $msg['pre'];
+	$res['post'] = $msg['post'];
+	$res['errno'] = Code::SUCCESS;
+	return $res;
+}
+
 function summary_get()
 {
 	if (!AccessController::hasAccess(Session::get('role', 'visitor'), 'system.summary')) {

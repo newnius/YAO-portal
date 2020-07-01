@@ -57,12 +57,11 @@ $entries = array(
 	array('summary', 'Summary'),
 	array('jobs', 'Jobs'),
 	array('workspaces', 'Workspaces'),
-	array('resources', 'Resources'),
 	array('logs', 'Activities'),
-	array('admin', 'Administration'),
-	array('agents', '->Agents'),
-	array('clusters', '->Virtual Clusters'),
-	array('logs_all', '->Audit')
+	array('resources', 'Admin:Resources'),
+	array('agents', 'Admin:Agents'),
+	array('clusters', 'Admin:Virtual Clusters'),
+	array('logs_all', 'Admin:Audit')
 );
 $visible_entries = array();
 foreach ($entries as $entry) {

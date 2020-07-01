@@ -71,7 +71,7 @@ switch ($action) {
 
 	case 'job_submit':
 		$job = new CRObject();
-		$job->set('name', cr_get_POST('name', '') . '-' . time() . Random::randomInt(1000, 9999));
+		$job->set('name', cr_get_POST('name', 'jobName'));
 		$job->set('virtual_cluster', cr_get_POST('cluster'));
 		$job->set('workspace', cr_get_POST('workspace'));
 		$job->set('priority', cr_get_POST('priority'));

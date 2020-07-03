@@ -133,6 +133,10 @@
 						<div class="row">
 							<div class="col-md-4">
 								<label>Docker Image</label>
+								<input type="text" class="form-control task-image" maxlength=""
+								       value="quickdeploy/yao-tensorflow:1.14-gpu"
+								       placeholder="quickdeploy/yao-tensorflow:1.14-gpu"/>
+								<!--
 								<select title="docker image" class="form-control form-control task-image" required>
 									<option value="nvidia/cuda:9.0-base">nvidia/cuda:9.0-base</option>
 									<option value="quickdeploy/yao-tensorflow:1.14-gpu" selected>
@@ -142,6 +146,7 @@
 										quickdeploy/yao-tensorflow:2.1-gpu
 									</option>
 								</select>
+								-->
 							</div>
 							<div class="col-md-6">
 								<label>CMD</label>

@@ -116,7 +116,11 @@ function job_list(CRObject $rule)
 		return $res;
 	}
 
-	$res['jobs'] = array_reverse($msg['jobs']);
+	if ($msg['jobs'] !== null) {
+		$res['jobs'] = array_reverse($msg['jobs']);
+	} else {
+		$res['jobs'] = [];
+	}
 	for ($i = 0; $i < sizeof($res['jobs']); $i++) {
 		$res['jobs'][$i]['tasks'] = json_encode($res['jobs'][$i]['tasks']);
 		if ($res['jobs'][$i]['run_before'] === 0) {

@@ -49,6 +49,7 @@ function job_submit(CRObject $job)
 	if ($msg['code'] !== 0) {
 		$res['errno'] = Code::FAIL;
 		$res['msg'] = $msg['error'];
+	} else {
 		$res['job_name'] = $msg['jobName'];
 	}
 

@@ -345,7 +345,7 @@ function conf_update($option, $value)
 	}
 
 	$spider = new Spider();
-	$spider->doGet(YAO_SCHEDULER_ADDR . '?action=update_conf&option=' . $option . '&value=' . $value);
+	$spider->doGet(YAO_SCHEDULER_ADDR . '?action=conf_update&option=' . $option . '&value=' . $value);
 	$msg = json_decode($spider->getBody(), true);
 
 	if ($msg['code'] !== 0) {

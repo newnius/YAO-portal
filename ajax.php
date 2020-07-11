@@ -240,6 +240,16 @@ switch ($action) {
 		$res = debug_get_bindings();
 		break;
 
+	case 'conf_update':
+		$option = cr_get_POST('option', '');
+		$value = cr_get_POST('value', '');
+		$res = conf_update($option, $value);
+		break;
+
+	case 'conf_list':
+		$res = conf_list();
+		break;
+
 	case 'user_signout':
 		$res = user_signout();
 		break;

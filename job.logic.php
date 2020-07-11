@@ -336,3 +336,46 @@ function job_describe(CRObject $rule)
 	}
 	return $res;
 }
+
+function conf_update($option, $value)
+{
+	if (!AccessController::hasAccess(Session::get('role', 'visitor'), 'job.list')) {
+		$res['errno'] = Code::NO_PRIVILEGE;
+		return $res;
+	}
+
+	$spider = new Spider();
+	$spider->doGet(YAO_SCHEDULER_ADDR . '?action=update_conf&option=' . $option . '&value=' . $value);
+	$msg = json_decode($spider->getBody(), true);
+
+	if ($msg['code'] !== 0) {
+		$res['errno'] = $msg['code'];
+		$res['msg'] = $msg['error'];
+		return $res;
+	}
+
+	$res['errno'] = Code::SUCCESS;
+	return $res;
+}
+
+function conf_list()
+{
+	if (!AccessController::hasAccess(Session::get('role', 'visitor'), 'job.list')) {
+		$res['errno'] = Code::NO_PRIVILEGE;
+		return $res;
+	}
+
+	$spider = new Spider();
+	$spider->doGet(YAO_SCHEDULER_ADDR . '?action=conf_list');
+	$msg = json_decode($spider->getBody(), true);
+
+	if ($msg['code'] !== 0) {
+		$res['errno'] = $msg['code'];
+		$res['msg'] = $msg['error'];
+		return $res;
+	}
+
+	$res['errno'] = Code::SUCCESS;
+	$res['options'] = $msg['options'];
+	return $res;
+}

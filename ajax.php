@@ -74,6 +74,8 @@ switch ($action) {
 		$job->set('name', cr_get_POST('name', 'jobName'));
 		$job->set('virtual_cluster', cr_get_POST('cluster'));
 		$job->set('workspace', cr_get_POST('workspace'));
+		$job->set('model_dir', cr_get_POST('model_dir'));
+		$job->set('output_dir', cr_get_POST('output_dir'));
 		$job->set('priority', cr_get_POST('priority'));
 		$job->set('run_before', cr_get_POST('run_before'));
 		$job->set('locality', cr_get_POST('locality'));

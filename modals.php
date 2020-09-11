@@ -89,6 +89,18 @@
 							<option value="">None</option>
 						</select>
 					</div>
+					<label>Model Dir</label>
+					<div class="form-group form-group-lg">
+						<label for="form-job-model-dir" class="sr-only">Model Dir</label>
+						<input type="text" id="form-job-model-dir" class="form-control" maxlength="256"
+						       placeholder="Dir for model checkpoints" required/>
+					</div>
+					<label>Output Dir</label>
+					<div class="form-group form-group-lg">
+						<label for="form-job-output-dir" class="sr-only">Workspace</label>
+						<input type="text" id="form-job-output-dir" class="form-control" maxlength="256"
+						       placeholder="Dir for result data" required/>
+					</div>
 					<label>Queue</label>
 					<div class="form-group form-group-lg">
 						<label for="form-job-cluster" class="sr-only">Virtual Cluster</label>
@@ -136,17 +148,6 @@
 								<input type="text" class="form-control task-image" maxlength=""
 								       value="quickdeploy/yao-tensorflow:1.14-gpu"
 								       placeholder="quickdeploy/yao-tensorflow:1.14-gpu"/>
-								<!--
-								<select title="docker image" class="form-control form-control task-image" required>
-									<option value="nvidia/cuda:9.0-base">nvidia/cuda:9.0-base</option>
-									<option value="quickdeploy/yao-tensorflow:1.14-gpu" selected>
-										quickdeploy/yao-tensorflow:1.14-gpu
-									</option>
-									<option value="quickdeploy/yao-tensorflow:2.1-gpu">
-										quickdeploy/yao-tensorflow:2.1-gpu
-									</option>
-								</select>
-								-->
 							</div>
 							<div class="col-md-6">
 								<label>CMD</label>
@@ -171,8 +172,10 @@
 							<div class="col-md-2">
 								<label>Node Role<abbr title="Node role">?</abbr></label>
 								<select class="form-control form-control task-is-ps" required>
-									<option value="1">PS</option>
-									<option value="0" selected>Worker</option>
+									<option value="1">Parameter Server</option>
+									<option value="0">Worker</option>
+									<option value="0" selected>Default</option>
+									<option value="0">Reducer</option>
 								</select>
 							</div>
 							<div class="col-md-2">

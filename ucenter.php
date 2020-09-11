@@ -56,11 +56,11 @@ if (isset($_GET['logs'])) {
 $entries = array(
 	array('summary', 'Summary'),
 	array('jobs', 'Jobs'),
-	array('workspaces', 'Workspaces'),
+	array('workspaces', 'Projects'),
 	array('logs', 'Activities'),
 	array('resources', 'Admin:Resources'),
-	array('agents', 'Admin:Agents'),
-	array('clusters', 'Admin:Virtual Clusters'),
+	//array('agents', 'Admin:Agents'),
+	array('clusters', 'Admin:Queues'),
 	array('logs_all', 'Admin:Audit')
 );
 $visible_entries = array();

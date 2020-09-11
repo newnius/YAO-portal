@@ -36,6 +36,8 @@ function job_submit(CRObject $job)
 	}
 	$job->set('tasks', $tasks);
 	$job->set('workspace', $job->get('workspace'));
+	$job->set('model_dir', $job->get('model_dir'));
+	$job->set('output_dir', $job->get('output_dir'));
 	$job->set('group', $job->get('virtual_cluster'));
 	$job->set('priority', $job->getInt('priority'));
 	$job->set('locality', $job->getInt('locality'));

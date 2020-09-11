@@ -110,6 +110,8 @@ function register_events_job() {
 	$("#form-job-predict-time").click(function (e) {
 		var name = $('#form-job-name').val();
 		var workspace = $('#form-job-workspace').val();
+		var model_dir = $('#form-job-model_dir').val();
+		var output_dir = $('#form-job-output_dir').val();
 		var cluster = $('#form-job-cluster').val();
 		var priority = $('#form-job-priority').val();
 		var run_before = $('#form-job-run-before').val();
@@ -148,6 +150,8 @@ function register_events_job() {
 			data: {
 				name: name,
 				workspace: workspace,
+				model_dir: model_dir,
+				output_dir: output_dir,
 				cluster: cluster,
 				priority: priority,
 				run_before: run_before,
@@ -246,7 +250,7 @@ function load_jobs(scope) {
 	$("#table-job").bootstrapTable({
 		url: 'service?action=job_list&who=' + scope,
 		responseHandler: jobResponseHandler,
-		sidePagination: 'server',
+		sidePagination: 'client',
 		cache: true,
 		striped: true,
 		pagination: true,
@@ -393,10 +397,7 @@ var statusFormatter = function (status) {
 
 function jobResponseHandler(res) {
 	if (res['errno'] === 0) {
-		var tmp = {};
-		tmp["total"] = res["count"];
-		tmp["rows"] = res["jobs"];
-		return tmp;
+		return res["jobs"];
 	}
 	$("#modal-msg-content").html(res["msg"]);
 	$("#modal-msg").modal('show');
